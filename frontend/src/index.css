@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1A56DB;
+  --color-brand-blue: #1A56DB;
+  --color-brand-light-blue: #EFF6FF;
+  --color-brand-orange: #F97316;
+  --color-brand-green: #16A34A;
+  --color-brand-amber: #D97706;
+  --color-brand-red: #DC2626;
+  --color-brand-white: #FFFFFF;
+  --color-brand-dark-text: #111827;
+  --color-brand-muted-text: #6B7280;
+
+  --font-sans: "Noto Sans Tamil", "Latha", sans-serif;
+
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.08);
+
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --radius-input: 8px;
+}
+
+@layer base {
+  :root {
+    --base-font-size: 16px;
+    --background: #f8fafc;
+    --foreground: #0f172a;
+  }
+}
+
+@layer base {
+  html {
+    font-size: var(--base-font-size);
+  }
+  body {
+    @apply bg-slate-50 text-brand-dark-text font-sans transition-colors duration-200 antialiased;
+  }
+}
+
+@layer components {
+  .glassmorphism {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-card;
+  }
+
+  .btn-primary {
+    @apply bg-primary hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-btn transition-colors focus:ring-4 focus:ring-blue-300 min-h-[52px] flex items-center justify-center;
+  }
+
+  .btn-secondary {
+    @apply bg-brand-light-blue text-primary hover:bg-blue-100 font-semibold py-3 px-6 rounded-btn transition-colors min-h-[52px] flex items-center justify-center;
+  }
+
+  .input-field {
+    @apply w-full border border-gray-300 rounded-input px-4 py-3 min-h-[52px] focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-shadow text-brand-dark-text bg-white;
+  }
+  
+  .card {
+    @apply bg-white rounded-card shadow-card p-6;
+  }
+}
+
+@media print {
+  body {
+    background: white;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}
+
+@media print {
+  body {
+    background: white;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}

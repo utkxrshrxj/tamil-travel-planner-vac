@@ -24,6 +24,13 @@ const userSchema = new mongoose.Schema(
       minlength: [6, 'கடவுச்சொல் குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்'],
       select: false,
     },
+    age: {
+      type: Number,
+    },
+    gender: {
+      type: String,
+      trim: true,
+    },
     isActive: {
       type: Boolean,
       default: true,

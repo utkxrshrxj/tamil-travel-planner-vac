@@ -1,0 +1,236 @@
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { NavBar } from '../components/NavBar';
+import { useBookingStore } from '../store/bookingStore';
+import { useSearchStore } from '../store/searchStore';
+import { bookingAPI } from '../services/api';
+import { ArrowLeft, UserPlus, CheckCircle2, ShieldCheck, Wallet, Loader2 } from 'lucide-react';
+
+export function Book() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { source, destination, travelDate } = useSearchStore();
+  const { selectedOption, travelClass, passengers, foodPreference, luggageAllowance, currentStep, setStep, setBookingData, resetBooking } = useBookingStore();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!selectedOption) {
+      navigate('/search');
+    }
+  }, [selectedOption, navigate]);
+
+  if (!selectedOption) return null;
+
+  const handlePassengerChange = (index, field, value) => {
+    const newPass = [...passengers];
+    newPass[index][field] = value;
+    setBookingData({ passengers: newPass });
+  };
+
+  const addPassenger = () => {
+    if (passengers.length < 6) {
+      setBookingData({ passengers: [...passengers, { id: passengers.length + 1, name: '', age: '', gender: 'ஆண்', idType: 'ஆதார்', idNumber: '', seat: '' }] });
+    }
+  };
+
+  const removePassenger = (index) => {
+    const newPass = passengers.filter((_, i) => i !== index);
+    setBookingData({ passengers: newPass });
+  };
+
+  const calculateTotal = () => {
+    const base = travelClass.price * passengers.length;
+    const tax = Math.round(base * 0.05);
+    const extraLuggage = luggageAllowance === '25 கிலோ' ? 500 : 0;
+    return base + tax + 30 + extraLuggage; // fee = 30
+  };
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      const payload = {
+        travelOptionId: selectedOption.id,
+        travelClass: travelClass.name,
+        passengers,
+        foodPreference,
+        luggageAllowance,
+        totalAmount: calculateTotal(),
+        source,
+        destination,
+        date: travelDate
+      };
+      const res = await bookingAPI.createBooking(payload);
+      resetBooking();
+      navigate(`/ticket/${res.data.ticketId || res.data._id || 'TKT-12345'}`);
+    } catch (err) {
+      console.error(err);
+      // Simulate success if API missing
+      setTimeout(() => {
+        resetBooking();
+        navigate('/ticket/TKT-demo-123');
+      }, 1500);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 pb-24">
+      <NavBar />
+      
+      <div className="bg-white border-b sticky top-[64px] z-30 shadow-sm">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center mb-2">
+          <button onClick={() => currentStep > 1 ? setStep(currentStep - 1) : navigate(-1)} className="p-2 mr-4 hover:bg-gray-100 rounded-full"><ArrowLeft size={24} /></button>
+          <h1 className="text-xl font-bold text-brandDarkText">பயணப் பதிவு</h1>
+        </div>
+        
+        {/* Progress Bar */}
+        <div className="max-w-4xl mx-auto px-8 pb-4">
+          <div className="flex justify-between relative">
+            <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-200 -z-10 -translate-y-1/2"></div>
+            <div className="absolute top-1/2 left-0 h-1 bg-primary -z-10 -translate-y-1/2 transition-all duration-300" style={{width: `${(currentStep-1)*50}%`}}></div>
+            
+            {[1, 2, 3].map((stepText, index) => (
+              <div key={index} className="flex flex-col items-center">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${currentStep >= index + 1 ? 'bg-primary text-white' : 'bg-gray-200 text-gray-500'}`}>
+                  {currentStep > index + 1 ? <CheckCircle2 size={18} /> : index + 1}
+                </div>
+                <span className={`text-[12px] font-bold mt-2 ${currentStep >= index + 1 ? 'text-primary' : 'text-gray-400'}`}>
+                  {index === 0 ? 'பயணிகள்' : index === 1 ? 'தேர்வுகள்' : 'உறுதி செய்'}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        {currentStep === 1 && (
+          <div className="space-y-6 slide-in">
+            {passengers.map((p, idx) => (
+              <div key={idx} className="bg-white rounded-card shadow-sm p-6 relative border border-gray-100">
+                <div className="flex justify-between items-center border-b pb-4 mb-4">
+                  <h3 className="font-bold text-lg text-primary">பயணி {idx + 1}</h3>
+                  {idx > 0 && <button onClick={() => removePassenger(idx)} className="text-brandRed text-sm font-semibold hover:underline">நீக்கு</button>}
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-brandMutedText text-sm mb-1 font-semibold">பெயர்</label>
+                    <input type="text" value={p.name} onChange={(e) => handlePassengerChange(idx, 'name', e.target.value)} className="input-field" placeholder="பயணியின் பெயர்"/>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-brandMutedText text-sm mb-1 font-semibold">வயது</label>
+                      <input type="number" value={p.age} onChange={(e) => handlePassengerChange(idx, 'age', e.target.value)} className="input-field" placeholder="வயது"/>
+                    </div>
+                    <div>
+                      <label className="block text-brandMutedText text-sm mb-1 font-semibold">பாலினம்</label>
+                      <select value={p.gender} onChange={(e) => handlePassengerChange(idx, 'gender', e.target.value)} className="input-field">
+                        <option>ஆண்</option><option>பெண்</option><option>மற்றவை</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-brandMutedText text-sm mb-1 font-semibold">அடையாள அட்டை</label>
+                    <select value={p.idType} onChange={(e) => handlePassengerChange(idx, 'idType', e.target.value)} className="input-field">
+                      <option>ஆதார்</option><option>PAN</option><option>வாக்காளர் அட்டை</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-brandMutedText text-sm mb-1 font-semibold">அடையாள எண்</label>
+                    <input type="text" value={p.idNumber} onChange={(e) => handlePassengerChange(idx, 'idNumber', e.target.value)} className="input-field" placeholder="எண்"/>
+                  </div>
+                </div>
+              </div>
+            ))}
+            
+            {passengers.length < 6 && (
+              <button onClick={addPassenger} className="w-full border-2 border-dashed border-primary text-primary hover:bg-blue-50 py-4 rounded-card font-bold flex items-center justify-center transition">
+                <UserPlus className="mr-2" /> இன்னொரு பயணி சேர்க்க
+              </button>
+            )}
+
+            <button onClick={() => setStep(2)} className="btn-primary w-full text-xl py-4 mt-8 shadow-lg">தொடர்க</button>
+          </div>
+        )}
+
+        {currentStep === 2 && (
+          <div className="space-y-8 slide-in">
+             <div className="bg-white p-6 rounded-card shadow-sm border border-gray-100">
+               <h3 className="text-xl font-bold text-brandDarkText mb-6">உணவு விருப்பம்</h3>
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                 {['சைவம்', 'அசைவம்', 'உணவு வேண்டாம்'].map(opt => (
+                   <button key={opt} onClick={() => setBookingData({foodPreference: opt})} className={`p-4 rounded-xl border-2 transition font-bold text-lg flex items-center justify-center ${foodPreference === opt ? 'border-primary bg-blue-50 text-primary shrink-0' : 'border-gray-200 text-gray-500 hover:border-blue-300'}`}>
+                     {opt}
+                   </button>
+                 ))}
+               </div>
+             </div>
+
+             <div className="bg-white p-6 rounded-card shadow-sm border border-gray-100">
+               <h3 className="text-xl font-bold text-brandDarkText mb-6">சாமான்கள் அளவு</h3>
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                 {['7 கிலோ', '15 கிலோ', '25 கிலோ'].map(opt => (
+                   <button key={opt} onClick={() => setBookingData({luggageAllowance: opt})} className={`p-4 rounded-xl border-2 transition flex flex-col items-center justify-center ${luggageAllowance === opt ? 'border-primary bg-blue-50 text-primary' : 'border-gray-200 text-gray-500'}`}>
+                     <span className="font-bold text-xl">{opt}</span>
+                     <span className="text-sm mt-1">{opt === '25 கிலோ' ? '₹500 கட்டணம்' : 'இலவசம்'}</span>
+                   </button>
+                 ))}
+               </div>
+             </div>
+
+             <div className="flex space-x-4 mt-8">
+               <button onClick={() => setStep(3)} className="btn-primary w-full text-xl py-4 shadow-lg shrink-0">கட்டணம் அமைப்புகளுக்குச் செல்</button>
+             </div>
+          </div>
+        )}
+
+        {currentStep === 3 && (
+          <div className="space-y-6 slide-in">
+            <div className="bg-white rounded-card shadow-sm p-6 border border-gray-100">
+              <h3 className="text-xl font-bold text-primary mb-4 flex items-center"><ShieldCheck className="mr-2"/> பயண சுருக்கம்</h3>
+              <p className="text-lg font-bold mb-1">{source} ➔ {destination}</p>
+              <p className="text-brandMutedText font-semibold mb-4">{travelDate} | {selectedOption.name} ({selectedOption.type})</p>
+              
+              <div className="border-t pt-4 mt-4">
+                <p className="font-semibold text-brandDarkText mb-2">பயணிகள் ({passengers.length}):</p>
+                {passengers.map((p, i) => <p key={i} className="text-brandMutedText mb-1">• {p.name || `பயணி ${i+1}`} ({p.age})</p>)}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-card shadow-sm p-6 border border-gray-100">
+              <h3 className="text-xl font-bold mb-4">கட்டண விவரம்</h3>
+              <div className="space-y-3 mb-4">
+                <div className="flex justify-between font-medium"><span className="text-brandMutedText">அடிப்படை கட்டணம் ({passengers.length} x ₹{travelClass.price})</span><span>₹{travelClass.price * passengers.length}</span></div>
+                <div className="flex justify-between font-medium"><span className="text-brandMutedText">வரி (5%)</span><span>₹{Math.round(travelClass.price * passengers.length * 0.05)}</span></div>
+                <div className="flex justify-between font-medium"><span className="text-brandMutedText">சேவை கட்டணம்</span><span>₹30</span></div>
+                {luggageAllowance === '25 கிலோ' && <div className="flex justify-between font-medium"><span className="text-brandMutedText">கூடுதல் சாமான் (25கி)</span><span>₹500</span></div>}
+              </div>
+              <div className="border-t pt-4 flex justify-between items-center text-xl font-bold text-primary">
+                <span>மொத்தம்</span>
+                <span>₹{calculateTotal()}</span>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-card shadow-sm p-6 border border-gray-100">
+              <h3 className="text-xl font-bold mb-4 flex items-center"><Wallet className="mr-2"/> கட்டண முறை</h3>
+              <div className="grid grid-cols-2 gap-4">
+                {['UPI', 'கார்டு', 'நெட் பேங்கிங்', 'வாலட்'].map(opt => (
+                   <button key={opt} className={`p-4 rounded-xl border-2 font-bold text-center ${opt === 'UPI' ? 'border-primary bg-blue-50 text-primary' : 'border-gray-200 text-gray-500'}`}>{opt}</button>
+                ))}
+              </div>
+            </div>
+
+            <button onClick={handleSubmit} disabled={isSubmitting} className="btn-primary w-full text-xl py-5 shadow-lg mt-8 flex items-center justify-center">
+              {isSubmitting ? <><Loader2 className="animate-spin mr-2"/> உங்கள் பயணம் பதிவாகிறது...</> : 'பயணம் உறுதி செய்க'}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

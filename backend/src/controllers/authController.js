@@ -21,7 +21,7 @@ const generateToken = (user) => {
 // @access  Public
 const register = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, age, gender } = req.body;
 
     const normalizedEmail = email?.toLowerCase().trim();
 
@@ -40,7 +40,7 @@ const register = async (req, res, next) => {
       });
     }
 
-    const user = await User.create({ username, email: normalizedEmail, password });
+    const user = await User.create({ username, email: normalizedEmail, password, age, gender });
     const token = generateToken(user);
 
     res.status(201).json({
@@ -51,6 +51,8 @@ const register = async (req, res, next) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        age: user.age,
+        gender: user.gender,
       },
     });
   } catch (error) {
@@ -99,6 +101,8 @@ const login = async (req, res, next) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        age: user.age,
+        gender: user.gender,
       },
     });
   } catch (error) {
@@ -118,6 +122,8 @@ const getMe = async (req, res, next) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        age: user.age,
+        gender: user.gender,
         createdAt: user.createdAt,
       },
     });
@@ -131,7 +137,7 @@ const getMe = async (req, res, next) => {
 // @access  Private
 const updateProfile = async (req, res, next) => {
   try {
-    const allowedFields = ['username', 'email'];
+    const allowedFields = ['username', 'email', 'age', 'gender'];
     const updates = {};
     allowedFields.forEach((field) => {
       if (req.body[field] !== undefined) {
@@ -152,6 +158,8 @@ const updateProfile = async (req, res, next) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        age: user.age,
+        gender: user.gender,
       },
     });
   } catch (error) {

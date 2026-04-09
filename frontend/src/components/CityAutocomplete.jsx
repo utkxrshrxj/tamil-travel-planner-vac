@@ -1,9 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 import { nlpAPI } from '../services/api';
 
-export function CityAutocomplete({ label, value, onChange, placeholder }) {
+const defaultCities = [
+  { name: 'சென்னை', train: 'MAS', flight: 'MAA' },
+  { name: 'மதுரை', train: 'MDU', flight: 'IXM' },
+  { name: 'கோயம்புத்தூர்', train: 'CBE', flight: 'CJB' },
+  { name: 'திருச்சிராப்பள்ளி', train: 'TPJ', flight: 'TRZ' },
+  { name: 'சேலம்', train: 'SA', flight: 'SXV' },
+  { name: 'திருநெல்வேலி', train: 'TEN', flight: 'TCR' },
+  { name: 'பெங்களூரு', train: 'SBC', flight: 'BLR' },
+  { name: 'ஹைதராபாத்', train: 'HYB', flight: 'HYD' },
+  { name: 'மும்பை', train: 'BCT', flight: 'BOM' },
+  { name: 'டெல்லி', train: 'NDLS', flight: 'DEL' },
+  { name: 'கொல்கத்தா', train: 'HWH', flight: 'CCU' }
+];
+
+export function CityAutocomplete({ label, value, onChange, placeholder, travelType }) {
   const [query, setQuery] = useState(value || '');
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState(defaultCities);
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef(null);
 
@@ -13,18 +27,16 @@ export function CityAutocomplete({ label, value, onChange, placeholder }) {
 
   useEffect(() => {
     const fetchCities = async () => {
-      if (query.length > 1) {
+      if (query.trim().length > 1) {
         try {
           const res = await nlpAPI.getCities(query);
           // Expecting an array of city objects [{name: 'சென்னை', code: 'MAS'}]
           setSuggestions(res.data || []);
-          setIsOpen(true);
         } catch (err) {
           console.error(err);
         }
       } else {
-        setSuggestions([]);
-        setIsOpen(false);
+        setSuggestions(defaultCities);
       }
     };
 
@@ -63,18 +75,17 @@ export function CityAutocomplete({ label, value, onChange, placeholder }) {
           setQuery(e.target.value);
           onChange(e.target.value);
         }}
-        onFocus={() => query.length > 1 && setIsOpen(true)}
+        onFocus={() => setIsOpen(true)}
       />
       {isOpen && suggestions.length > 0 && (
-        <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-input shadow-lg max-h-60 overflow-auto">
+        <ul className="absolute z-10 w-full mt-1 glassmorphism border border-white/60 rounded-input shadow-lg max-h-60 overflow-auto">
           {suggestions.map((city, idx) => (
             <li
               key={idx}
-              className="px-4 py-3 hover:bg-brandLightBlue cursor-pointer transition text-brandDarkText border-b last:border-b-0"
+              className="px-4 py-3 hover:bg-white/40 cursor-pointer transition text-brandDarkText border-b border-white/20 last:border-b-0"
               onClick={() => handleSelect(city)}
             >
               <span className="font-semibold">{city.name}</span>
-              {city.code && <span className="ml-2 text-brandMutedText text-xs">({city.code})</span>}
             </li>
           ))}
         </ul>

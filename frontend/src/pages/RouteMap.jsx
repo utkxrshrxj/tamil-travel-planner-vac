@@ -59,11 +59,11 @@ export function RouteMap() {
   ];
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
+    <div className="h-screen flex flex-col bg-transparent">
       <NavBar />
       
       <div className="flex-1 relative">
-         <button onClick={() => navigate(-1)} className="absolute top-4 left-4 z-[400] bg-white p-2 rounded-full shadow-md text-primary"><ArrowLeft size={24}/></button>
+         <button onClick={() => navigate(-1)} className="absolute top-4 left-4 z-[400] glassmorphism p-2 rounded-full shadow-md text-primary"><ArrowLeft size={24}/></button>
          
          <MapContainer center={routeData.sourceCoords} zoom={7} scrollWheelZoom={true} className="w-full h-full z-10 border-b">
            <TileLayer
@@ -89,7 +89,7 @@ export function RouteMap() {
          </MapContainer>
 
          {/* Bottom Sheet Summary */}
-         <div className="absolute bottom-0 left-0 w-full bg-white rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-[400] p-6 max-h-[300px] overflow-y-auto">
+         <div className="absolute bottom-0 left-0 w-full glassmorphism border-t border-white/40 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-[400] p-6 max-h-[300px] overflow-y-auto">
             <h3 className="text-xl font-bold text-brandDarkText mb-4">பயண வழி</h3>
             <div className="flex items-center space-x-4 mb-2">
                <div className="w-4 h-4 rounded-full bg-primary"></div>

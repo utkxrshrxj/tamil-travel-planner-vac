@@ -1,31 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #1A56DB;
-  --color-brand-blue: #1A56DB;
-  --color-brand-light-blue: #EFF6FF;
-  --color-brand-orange: #F97316;
-  --color-brand-green: #16A34A;
+  --color-primary: #1E3A8A; /* Deep Blue / Royal Blue */
+  --color-brand-blue: #1E40AF;
+  --color-brand-light-blue: #DBEAFE;
+  --color-brand-orange: #EA580C; /* Sunset orange */
+  --color-brand-green: #15803D; /* Earthy green */
   --color-brand-amber: #D97706;
-  --color-brand-red: #DC2626;
+  --color-brand-red: #E11D48;
   --color-brand-white: #FFFFFF;
-  --color-brand-dark-text: #111827;
-  --color-brand-muted-text: #6B7280;
+  --color-brand-dark-text: #0F172A;
+  --color-brand-muted-text: #475569;
+  
+  --font-sans: "Inter", "Noto Sans Tamil", "Latha", sans-serif;
 
-  --font-sans: "Noto Sans Tamil", "Latha", sans-serif;
+  --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0,0,0,0.05);
+  --shadow-hover: 0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 10px 20px -10px rgba(0,0,0,0.1);
 
-  --shadow-card: 0 4px 24px rgba(0,0,0,0.08);
-
-  --radius-card: 16px;
-  --radius-btn: 12px;
-  --radius-input: 8px;
+  --radius-card: 20px;
+  --radius-btn: 14px;
+  --radius-input: 12px;
 }
 
 @layer base {
   :root {
     --base-font-size: 16px;
-    --background: #f8fafc;
-    --foreground: #0f172a;
   }
 }
 
@@ -34,40 +33,70 @@
     font-size: var(--base-font-size);
   }
   body {
-    @apply bg-slate-50 text-brand-dark-text font-sans transition-colors duration-200 antialiased;
+    @apply text-brand-dark-text font-sans transition-colors duration-200 antialiased overflow-x-hidden min-h-screen bg-fixed bg-center bg-cover;
+    /* Soft frosted wash over a scenic travel landscape */
+    background-image: linear-gradient(rgba(240, 249, 255, 0.7), rgba(225, 235, 250, 0.85)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
   }
 }
 
 @layer components {
   .glassmorphism {
-    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-card;
+    @apply bg-white/60 backdrop-blur-[20px] border border-white/60 shadow-card;
+  }
+
+  .glassmorphism-dark {
+    @apply bg-slate-900/50 backdrop-blur-[20px] border border-white/20 shadow-card text-white;
   }
 
   .btn-primary {
-    @apply bg-primary hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-btn transition-colors focus:ring-4 focus:ring-blue-300 min-h-[52px] flex items-center justify-center;
+    @apply bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-btn transition-all duration-300 transform hover:-translate-y-1 hover:shadow-hover focus:ring-4 focus:ring-blue-300/50 min-h-[52px] flex items-center justify-center;
   }
 
   .btn-secondary {
-    @apply bg-brand-light-blue text-primary hover:bg-blue-100 font-semibold py-3 px-6 rounded-btn transition-colors min-h-[52px] flex items-center justify-center;
+    @apply bg-white/70 backdrop-blur-md text-blue-900 hover:bg-white font-bold py-3 px-6 rounded-btn transition-colors min-h-[52px] flex items-center justify-center shadow-sm border border-white/50;
   }
 
   .input-field {
-    @apply w-full border border-gray-300 rounded-input px-4 py-3 min-h-[52px] focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-shadow text-brand-dark-text bg-white;
+    @apply w-full bg-white/60 backdrop-blur-md border border-white/60 rounded-input px-4 py-3 min-h-[52px] focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent outline-none transition-all text-brand-dark-text shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)];
   }
   
   .card {
-    @apply bg-white rounded-card shadow-card p-6;
+    @apply bg-white/60 backdrop-blur-[20px] border border-white/60 shadow-card rounded-card p-6 transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    @apply shadow-hover transform -translate-y-1 bg-white/80;
   }
 }
 
+/* Animations */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Base resets & utilities */
 @media print {
-  body {
-    background: white;
-  }
-  .no-print {
-    display: none !important;
-  }
-  .print-only {
-    display: block !important;
-  }
+  body { background: white; }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
 }

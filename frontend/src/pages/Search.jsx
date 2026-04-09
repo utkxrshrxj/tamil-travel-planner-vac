@@ -4,6 +4,7 @@ import { NavBar } from '../components/NavBar';
 import { useSearchStore } from '../store/searchStore';
 import { useBookingStore } from '../store/bookingStore';
 import { travelAPI } from '../services/api';
+import { useAuthStore } from '../store/authStore';
 import { ArrowLeft, Edit3, Train, Bus, Plane, Clock, Coffee, Wifi, MapPin } from 'lucide-react';
 
 export function Search() {
@@ -37,7 +38,14 @@ export function Search() {
     fetchResults();
   }, [source, destination, travelDate, travelType, passengers, setResults, setIsLoading]);
 
+  const { isAuthenticated } = useAuthStore();
+
   const handleBook = (option, cls) => {
+    if (!isAuthenticated) {
+      alert("தயவுசெய்து முன்பதிவு செய்ய உள்நுழையவும் (Please log in to book tickets)");
+      navigate('/login');
+      return;
+    }
     setBookingData({ selectedOption: option, travelClass: cls, currentStep: 1 });
     navigate(`/book/${option._id}`);
   };
@@ -67,11 +75,11 @@ export function Search() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-transparent pb-20">
       <NavBar />
       
       {/* Sticky Header with Mode Switcher */}
-      <div className="sticky top-[64px] z-40 bg-white border-b shadow-sm">
+      <div className="sticky top-[64px] z-40 glassmorphism shadow-sm border-b-0 rounded-none rounded-b-xl border-x-0 border-t-0">
         <div className="px-4 py-3 flex items-center justify-between max-w-7xl mx-auto w-full">
           <div className="flex items-center space-x-4">
             <button onClick={() => navigate(-1)} className="p-2 hover:bg-gray-100 rounded-full"><ArrowLeft size={24} /></button>
@@ -92,7 +100,7 @@ export function Search() {
         </div>
 
         {/* Horizontal Mode Tabs */}
-        <div className="flex overflow-x-auto border-t bg-white scrollbar-hide px-4">
+        <div className="flex overflow-x-auto border-t border-white/20 scrollbar-hide px-4">
           <div className="flex space-x-2 mx-auto py-1">
             {travelModeTabs.map((tab) => (
               <button
@@ -114,8 +122,8 @@ export function Search() {
 
       <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row gap-6 max-w-7xl">
         {/* Filter Sidebar Desktop */}
-        <aside className="hidden md:block w-72 bg-white rounded-card shadow-card p-6 h-fit sticky top-[180px]">
-          <h2 className="text-xl font-bold border-b pb-4 mb-4">வடிகட்டிகள்</h2>
+        <aside className="hidden md:block w-72 glassmorphism rounded-card p-6 h-fit sticky top-[180px]">
+          <h2 className="text-xl font-bold border-b border-gray-200/50 pb-4 mb-4">வடிகட்டிகள்</h2>
           
           <div className="mb-6">
             <h3 className="font-semibold mb-3">பிற வசதிகள்</h3>
@@ -147,7 +155,7 @@ export function Search() {
         {/* Results List */}
         <div className="flex-1 space-y-6">
           {!source || !destination ? (
-            <div className="bg-white rounded-card p-12 text-center shadow-lg border-2 border-dashed border-gray-200">
+            <div className="glassmorphism rounded-card p-12 text-center shadow-lg border border-white/50">
                <MapPin size={64} className="mx-auto text-primary opacity-20 mb-6" />
                <h2 className="text-2xl font-bold text-brand-dark-text mb-2">எங்கிருந்து செல்ல வேண்டும்?</h2>
                <p className="text-brand-muted-text text-lg mb-8">தயவுசெய்து முகப்பு பக்கத்தில் இடங்களை தேர்வு செய்யவும்.</p>
@@ -159,14 +167,14 @@ export function Search() {
               <p className="text-xl font-bold text-brand-muted-text">தேடுகிறோம்...</p>
             </div>
           ) : (results || []).length === 0 ? (
-            <div className="bg-white rounded-card p-12 text-center shadow-sm">
-              <MapPin size={64} className="mx-auto text-gray-300 mb-6" />
+            <div className="glassmorphism rounded-card p-12 text-center shadow-sm">
+              <MapPin size={64} className="mx-auto text-gray-400 mb-6" />
               <h2 className="text-2xl font-bold text-brand-dark-text mb-2">இந்த பாதையில் பயண வழிகள் இல்லை</h2>
               <p className="text-brand-muted-text text-lg">தயவுசெய்து தேதியை அல்லது ஊரை மாற்றி மீண்டும் தேடவும்.</p>
             </div>
           ) : (
             results.map((opt) => (
-              <div key={opt._id} className="bg-white rounded-card shadow-card p-6 border border-transparent hover:border-blue-200 transition-colors">
+              <div key={opt._id} className="glassmorphism rounded-card p-6 border border-white/40 hover:border-blue-300 transition-all duration-300 hover:shadow-hover hover:-translate-y-1">
                 <div className="flex justify-between items-start mb-6">
                   <div className="flex items-center space-x-4">
                     <div className="bg-blue-50 p-3 rounded-full text-primary">{getIcon(opt.type)}</div>

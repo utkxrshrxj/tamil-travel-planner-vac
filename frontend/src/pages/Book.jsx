@@ -81,10 +81,10 @@ export function Book() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-transparent pb-24">
       <NavBar />
       
-      <div className="bg-white border-b sticky top-[64px] z-30 shadow-sm">
+      <div className="glassmorphism sticky top-[64px] z-30 shadow-sm border-b-0 rounded-none rounded-b-xl border-x-0 border-t-0">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center mb-2">
           <button onClick={() => currentStep > 1 ? setStep(currentStep - 1) : navigate(-1)} className="p-2 mr-4 hover:bg-gray-100 rounded-full"><ArrowLeft size={24} /></button>
           <h1 className="text-xl font-bold text-brandDarkText">பயணப் பதிவு</h1>
@@ -114,7 +114,7 @@ export function Book() {
         {currentStep === 1 && (
           <div className="space-y-6 slide-in">
             {passengers.map((p, idx) => (
-              <div key={idx} className="bg-white rounded-card shadow-sm p-6 relative border border-gray-100">
+              <div key={idx} className="glassmorphism rounded-card shadow-sm p-6 relative border border-white/40">
                 <div className="flex justify-between items-center border-b pb-4 mb-4">
                   <h3 className="font-bold text-lg text-primary">பயணி {idx + 1}</h3>
                   {idx > 0 && <button onClick={() => removePassenger(idx)} className="text-brandRed text-sm font-semibold hover:underline">நீக்கு</button>}
@@ -166,7 +166,7 @@ export function Book() {
 
         {currentStep === 2 && (
           <div className="space-y-8 slide-in">
-             <div className="bg-white p-6 rounded-card shadow-sm border border-gray-100">
+             <div className="glassmorphism p-6 rounded-card shadow-sm border border-white/40">
                <h3 className="text-xl font-bold text-brandDarkText mb-6">உணவு விருப்பம்</h3>
                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                  {['சைவம்', 'அசைவம்', 'உணவு வேண்டாம்'].map(opt => (
@@ -177,7 +177,7 @@ export function Book() {
                </div>
              </div>
 
-             <div className="bg-white p-6 rounded-card shadow-sm border border-gray-100">
+             <div className="glassmorphism p-6 rounded-card shadow-sm border border-white/40">
                <h3 className="text-xl font-bold text-brandDarkText mb-6">சாமான்கள் அளவு</h3>
                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                  {['7 கிலோ', '15 கிலோ', '25 கிலோ'].map(opt => (
@@ -197,7 +197,7 @@ export function Book() {
 
         {currentStep === 3 && (
           <div className="space-y-6 slide-in">
-            <div className="bg-white rounded-card shadow-sm p-6 border border-gray-100">
+            <div className="glassmorphism rounded-card shadow-sm p-6 border border-white/40">
               <h3 className="text-xl font-bold text-primary mb-4 flex items-center"><ShieldCheck className="mr-2"/> பயண சுருக்கம்</h3>
               <p className="text-lg font-bold mb-1">{source} ➔ {destination}</p>
               <p className="text-brandMutedText font-semibold mb-4">{travelDate} | {selectedOption.name} ({selectedOption.type})</p>
@@ -208,7 +208,7 @@ export function Book() {
               </div>
             </div>
 
-            <div className="bg-white rounded-card shadow-sm p-6 border border-gray-100">
+            <div className="glassmorphism rounded-card shadow-sm p-6 border border-white/40">
               <h3 className="text-xl font-bold mb-4">கட்டண விவரம்</h3>
               <div className="space-y-3 mb-4">
                 <div className="flex justify-between font-medium"><span className="text-brandMutedText">அடிப்படை கட்டணம் ({passengers.length} x ₹{travelClass.price})</span><span>₹{travelClass.price * passengers.length}</span></div>
@@ -222,7 +222,7 @@ export function Book() {
               </div>
             </div>
 
-            <div className="bg-white rounded-card shadow-sm p-6 border border-gray-100">
+            <div className="glassmorphism rounded-card shadow-sm p-6 border border-white/40">
               <h3 className="text-xl font-bold mb-4 flex items-center"><Wallet className="mr-2"/> கட்டண முறை</h3>
               <div className="grid grid-cols-2 gap-4">
                 {['UPI', 'கார்டு', 'நெட் பேங்கிங்', 'வாலட்'].map(opt => (

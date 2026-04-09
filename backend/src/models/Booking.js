@@ -118,6 +118,5 @@ bookingSchema.pre('save', function (next) {
 });
 
 bookingSchema.index({ userId: 1, createdAt: -1 });
-bookingSchema.index({ bookingId: 1 });
 
 module.exports = mongoose.model('Booking', bookingSchema);

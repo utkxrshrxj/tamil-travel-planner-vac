@@ -21,15 +21,15 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={isAuthenticated ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />} />
+        <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/login" element={isAuthenticated ? <Navigate to="/home" replace /> : <Login />} />
-        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path="/search" element={<Search />} /> {/* Public view search */}
+        <Route path="/home" element={<Home />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/book/:id" element={<ProtectedRoute><Book /></ProtectedRoute>} />
         <Route path="/ticket/:ticketId" element={<ProtectedRoute><Ticket /></ProtectedRoute>} />
         <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
-        <Route path="/pnr" element={<PNR />} /> {/* Public PNR check */}
-        <Route path="/route/:id" element={<RouteMap />} /> {/* Public Route Map */}
+        <Route path="/pnr" element={<PNR />} />
+        <Route path="/route/:id" element={<RouteMap />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

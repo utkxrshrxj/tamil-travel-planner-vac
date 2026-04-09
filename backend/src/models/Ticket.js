@@ -77,8 +77,8 @@ ticketSchema.pre('save', function (next) {
   next();
 });
 
-ticketSchema.index({ ticketId: 1 });
+ticketSchema.index({ bookingId: 1 });
+ticketSchema.index({ 'passengers.name': 1 });
 ticketSchema.index({ userId: 1 });
-ticketSchema.index({ pnrNumber: 1 });
 
 module.exports = mongoose.model('Ticket', ticketSchema);

@@ -65,12 +65,12 @@ export function Ticket() {
   const passengers = ticket.passengerInfo || [];
 
   return (
-    <div className="min-h-screen bg-gray-100 pb-20">
+    <div className="min-h-screen bg-transparent pb-20">
       <div className="no-print"><NavBar /></div>
       
       <div className="max-w-2xl mx-auto px-4 mt-8 md:mt-12">
         {/* Ticket Card */}
-        <div ref={printRef} className="bg-white rounded-xl shadow-2xl overflow-hidden print-only-card relative">
+        <div ref={printRef} className="bg-white/90 backdrop-blur-md border border-white/60 rounded-xl shadow-2xl overflow-hidden print-only-card relative">
            {/* Top Section */}
            <div className="bg-gradient-to-r from-blue-800 to-primary text-white p-6 pb-8">
               <div className="flex justify-between items-center mb-6">
@@ -95,7 +95,7 @@ export function Ticket() {
            </svg>
 
            {/* Middle Section */}
-           <div className="px-6 pt-10 pb-6 bg-white">
+           <div className="px-6 pt-10 pb-6 bg-transparent">
               <div className="flex justify-between items-center mb-8 border-b border-gray-100 pb-8">
                  <div className="text-center w-1/3">
                     <p className="text-xs text-brandMutedText mb-1 uppercase font-semibold">புறப்பாடு</p>
@@ -135,7 +135,7 @@ export function Ticket() {
                  </div>
               </div>
 
-              <div className="mb-6 bg-gray-50 rounded-lg p-4">
+              <div className="mb-6 bg-white/50 backdrop-blur-sm border border-white/50 rounded-lg p-4">
                  <h3 className="font-bold text-brandDarkText mb-3 border-b pb-2">பயணிகள் விவரம்</h3>
                  <table className="w-full text-left font-medium">
                     <thead className="text-brandMutedText text-xs">

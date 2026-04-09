@@ -52,13 +52,13 @@ export function Account() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 md:pb-0">
+    <div className="min-h-screen bg-transparent pb-20 md:pb-0">
       <NavBar />
       
       <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
         
         {/* Sidebar Menu */}
-        <aside className="w-full md:w-72 bg-white rounded-card shadow-sm border border-gray-100 overflow-hidden shrink-0 h-fit">
+        <aside className="w-full md:w-72 glassmorphism rounded-card shadow-sm border-white/40 overflow-hidden shrink-0 h-fit">
           <div className="p-6 bg-brandLightBlue flex items-center space-x-4">
              <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold">
                {user?.username?.charAt(0) || 'ந'}
@@ -89,7 +89,7 @@ export function Account() {
         {/* Content Area */}
         <div className="flex-1">
           {activeTab === 'profile' && (
-            <div className="bg-white p-6 rounded-card shadow-sm border border-gray-100 slide-in">
+            <div className="glassmorphism p-6 rounded-card shadow-sm border border-white/40 slide-in">
               <div className="flex justify-between items-center mb-6 border-b pb-4">
                 <h2 className="text-2xl font-bold text-brandDarkText">சுயவிவரம்</h2>
                 <button className="text-primary font-bold hover:underline">திருத்து</button>
@@ -108,7 +108,7 @@ export function Account() {
                <h2 className="text-2xl font-bold text-brandDarkText mb-6">என் பயணங்கள்</h2>
                <div className="space-y-4">
                  {bookings.length > 0 ? bookings.map((b) => (
-                   <div key={b._id} className="bg-white p-6 rounded-card shadow-sm border border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center">
+                   <div key={b._id} className="glassmorphism p-6 rounded-card shadow-sm border border-white/40 flex flex-col md:flex-row justify-between items-start md:items-center">
                       <div>
                         <div className="flex items-center space-x-2 mb-2">
                            <span className={`px-2 py-1 rounded text-xs font-bold leading-none ${b.status === 'Cancelled' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-700'}`}>
@@ -125,7 +125,7 @@ export function Account() {
                       </div>
                    </div>
                  )) : (
-                   <div className="text-center py-12 bg-white rounded-card text-brandMutedText">
+                   <div className="text-center py-12 glassmorphism rounded-card border border-white/40 text-brandMutedText">
                       <p className="text-lg font-bold">பயணங்கள் ஏதுமில்லை</p>
                    </div>
                  )}
@@ -134,7 +134,7 @@ export function Account() {
           )}
 
           {activeTab === 'settings' && (
-            <div className="bg-white p-6 rounded-card shadow-sm border border-gray-100 slide-in">
+            <div className="glassmorphism p-6 rounded-card shadow-sm border border-white/40 slide-in">
               <h2 className="text-2xl font-bold text-brandDarkText mb-6 border-b pb-4">அமைப்புகள்</h2>
               <div className="space-y-6 max-w-md">
                  <div>

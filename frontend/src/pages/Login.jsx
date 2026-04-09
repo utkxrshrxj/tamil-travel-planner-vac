@@ -41,8 +41,8 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 to-primary flex items-center justify-center p-6">
-      <div className="card w-full max-w-[480px]">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-black/20">
+      <div className="glassmorphism w-full max-w-[480px] p-8 rounded-card">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-primary mb-2">நம்ம யாத்திரை</h1>
           <p className="text-brandMutedText text-lg">உங்கள் பயணம், எங்கள் பொறுப்பு</p>

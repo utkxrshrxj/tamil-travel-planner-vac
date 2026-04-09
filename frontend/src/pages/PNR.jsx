@@ -50,11 +50,11 @@ export function PNR() {
   };
 
   return (
-    <div className="min-h-screen bg-brandLightBlue pb-20">
+    <div className="min-h-screen bg-transparent pb-20">
       <NavBar />
       
       <div className="max-w-2xl mx-auto px-4 mt-16">
-        <div className="bg-white rounded-[24px] shadow-xl p-8 border border-blue-50 relative overflow-hidden">
+        <div className="glassmorphism rounded-[24px] shadow-xl p-8 border border-white/40 relative overflow-hidden">
            <div className="absolute top-0 left-0 w-full h-2 bg-primary"></div>
            <h1 className="text-3xl font-bold text-center text-primary mb-2">PNR நிலை சரிபார்க்க</h1>
            <p className="text-center text-brandMutedText mb-8">உங்கள் பயணத்தின் தற்போதைய நிலையை அறிய PNR எண்ணை உள்ளிடவும்</p>
@@ -77,7 +77,7 @@ export function PNR() {
            {errorMsg && <div className="bg-red-50 text-brandRed p-4 rounded-lg font-bold text-center mb-6">{errorMsg}</div>}
 
            {statusResult && (
-             <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 slide-in">
+             <div className="glassmorphism border border-white/50 rounded-xl p-6 slide-in">
                 <div className="flex justify-between items-center mb-4 border-b pb-4">
                   <div>
                      <p className="text-sm text-brandMutedText font-semibold">PNR எண்</p>
@@ -97,7 +97,7 @@ export function PNR() {
                 <h4 className="font-bold border-b pb-2 mb-3">பயணிகள் நிலை</h4>
                 <div className="space-y-3 mb-6">
                    {statusResult.passengerInfo?.map((p, i) => (
-                      <div key={i} className="flex justify-between items-center bg-white p-3 rounded shadow-sm border border-gray-100">
+                      <div key={i} className="flex justify-between items-center glassmorphism p-3 rounded shadow-sm border border-white/40">
                          <span className="font-semibold">{p.name}</span>
                          <div className="text-right">
                             <span className="text-sm font-bold text-brandGreen block">உறுதி (CNF)</span>

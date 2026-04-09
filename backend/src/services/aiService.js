@@ -45,10 +45,14 @@ const parseTravelIntent = async (text) => {
   try {
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const jsonStr = response.text();
+    let jsonStr = response.text();
+    
+    // Clean JSON if Gemini returns markdown blocks
+    jsonStr = jsonStr.replace(/```json/g, "").replace(/```/g, "").trim();
+    
     return JSON.parse(jsonStr);
   } catch (error) {
-    console.error("Gemini Parsing Error:", error);
+    console.error("Gemini Parsing Error Details:", error);
     return null;
   }
 };

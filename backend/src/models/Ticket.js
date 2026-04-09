@@ -5,7 +5,6 @@ const ticketSchema = new mongoose.Schema(
     ticketId: {
       type: String,
       unique: true,
-      required: true,
     },
     bookingId: {
       type: mongoose.Schema.Types.ObjectId,

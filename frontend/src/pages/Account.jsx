@@ -110,18 +110,20 @@ export function Account() {
                  {bookings.length > 0 ? bookings.map((b) => (
                    <div key={b._id} className="glassmorphism p-6 rounded-card shadow-sm border border-white/40 flex flex-col md:flex-row justify-between items-start md:items-center">
                       <div>
-                        <div className="flex items-center space-x-2 mb-2">
-                           <span className={`px-2 py-1 rounded text-xs font-bold leading-none ${b.status === 'Cancelled' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-700'}`}>
-                              {b.status === 'Cancelled' ? 'ரத்து செய்யப்பட்டது' : 'உறுதி'}
-                           </span>
-                           <span className="text-brandMutedText text-sm font-semibold">{b.date}</span>
-                        </div>
-                        <h3 className="font-bold text-lg">{b.source} ➔ {b.destination}</h3>
-                        <p className="text-brandMutedText font-semibold mt-1">₹{b.totalAmount}</p>
+                         <div className="flex items-center space-x-2 mb-2">
+                            <span className={`px-2 py-1 rounded text-xs font-bold leading-none ${b.bookingStatus === 'cancelled' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-700'}`}>
+                               {b.bookingStatus === 'cancelled' ? 'ரத்து செய்யப்பட்டது' : 'உறுதி செய்யப்பட்டது'}
+                            </span>
+                            <span className="text-brandMutedText text-sm font-semibold">
+                              {new Date(b.travelDate).toLocaleDateString('ta-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                            </span>
+                         </div>
+                         <h3 className="font-bold text-lg">{b.sourceName} ➔ {b.destinationName}</h3>
+                         <p className="text-brandMutedText font-semibold mt-1">₹{b.totalAmount} | {b.travelType === 'train' ? 'ரயில்' : b.travelType === 'bus' ? 'பஸ்' : 'விமானம்'}</p>
                       </div>
                       <div className="mt-4 md:mt-0 flex space-x-3">
-                         <button onClick={() => navigate(`/ticket/${b.ticketId || b._id}`)} className="text-primary font-bold bg-blue-50 px-4 py-2 rounded-btn">டிக்கெட் பார்</button>
-                         {b.status !== 'Cancelled' && <button className="text-brandRed font-bold bg-red-50 px-4 py-2 rounded-btn">ரத்து செய்</button>}
+                          <button onClick={() => navigate(`/ticket/${b.ticketId?._id || b.ticketId || b._id}`)} className="text-primary font-bold bg-blue-50 px-4 py-2 rounded-btn">டிக்கெட் பார்</button>
+                          {b.bookingStatus !== 'cancelled' && <button className="text-brandRed font-bold bg-red-50 px-4 py-2 rounded-btn">ரத்து செய்</button>}
                       </div>
                    </div>
                  )) : (

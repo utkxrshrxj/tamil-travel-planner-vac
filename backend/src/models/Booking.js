@@ -29,7 +29,6 @@ const bookingSchema = new mongoose.Schema(
     bookingId: {
       type: String,
       unique: true,
-      required: true,
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -61,7 +60,7 @@ const bookingSchema = new mongoose.Schema(
 
     foodPreference: {
       type: String,
-      enum: ['veg', 'non_veg', 'no_food'],
+      enum: ['veg', 'non-veg', 'no_food'],
       default: 'no_food',
     },
 

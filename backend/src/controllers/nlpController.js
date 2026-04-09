@@ -9,17 +9,18 @@ const TRAVEL_TYPES = {
 
 const CITY_MAP = {
   சென்னை: 'MAS', madras: 'MAS', chennai: 'MAS',
-  கோவை: 'CBE', coimbatore: 'CBE', kovai: 'CBE',
+  கோவை: 'CBE', coimbatore: 'CBE', kovai: 'CBE', கோயம்புத்தூர்: 'CBE',
   மதுரை: 'MDU', madurai: 'MDU',
-  திருச்சி: 'TPJ', trichy: 'TPJ',
+  திருச்சி: 'TPJ', trichy: 'TPJ', திருச்சிராப்பள்ளி: 'TPJ',
   சேலம்: 'SA', salem: 'SA',
   வேலூர்: 'VLR', vellore: 'VLR',
-  திருநெல்வேலி: 'TEN', tirunelveli: 'TEN',
+  திருநெல்வேலி: 'TEN', tirunelveli: 'TEN', நெல்லை: 'TEN',
   நாகர்கோவில்: 'NCJ', nagercoil: 'NCJ',
   தஞ்சாவூர்: 'TJ', thanjavur: 'TJ',
   ஈரோடு: 'ED', erode: 'ED',
-  புதுச்சேரி: 'PDY', pondicherry: 'PDY',
-  ஓட்டி: 'UAM', ooty: 'UAM',
+  புதுச்சேரி: 'PDY', pondicherry: 'PDY', பாண்டிச்சேரி: 'PDY',
+  ஓட்டி: 'UAM', ooty: 'UAM', உதகமண்டலம்: 'UAM',
+  பெங்களூர்: 'SBC', bangalore: 'SBC', பெங்களூரு: 'SBC',
 };
 
 // ... existing maps for fallback ...

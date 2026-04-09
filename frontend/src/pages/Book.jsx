@@ -12,6 +12,7 @@ export function Book() {
   const { source, destination, travelDate } = useSearchStore();
   const { selectedOption, travelClass, passengers, foodPreference, luggageAllowance, currentStep, setStep, setBookingData, resetBooking } = useBookingStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [paymentMethod, setLocalPaymentMethod] = useState('upi');
 
   useEffect(() => {
     if (!selectedOption) {
@@ -49,6 +50,19 @@ export function Book() {
   };
 
   const handleSubmit = async () => {
+    // Frontend Validation
+    if (!travelDate) {
+      alert('தயவுசெய்து பயணத் தேதியைத் தேர்ந்தெடுக்கவும்.');
+      return;
+    }
+
+    for (let i = 0; i < passengers.length; i++) {
+      if (!passengers[i].name || !passengers[i].age) {
+        alert(`பயணி ${i + 1}-ன் பெயர் மற்றும் வயதை நிரப்பவும்.`);
+        return;
+      }
+    }
+
     setIsSubmitting(true);
     try {
       const payload = {
@@ -56,25 +70,30 @@ export function Book() {
         travelClass: travelClass.class,
         travelDate: travelDate,
         passengers: passengers.map(p => ({
-          name: p.name,
+          name: p.name.trim(),
           age: parseInt(p.age),
           gender: p.gender === 'ஆண்' ? 'male' : p.gender === 'பெண்' ? 'female' : 'other',
-          idType: p.idType,
+          idType: p.idType === 'ஆதார்' ? 'aadhaar' : p.idType === 'PAN' ? 'pan' : 'voter_id',
           idNumber: p.idNumber
         })),
         foodPreference: foodPreference === 'சைவம்' ? 'veg' : foodPreference === 'அசைவம்' ? 'non-veg' : 'no_food',
         luggageAllowance: parseInt(luggageAllowance) || 15,
-        paymentMethod: 'upi', // Default for now
+        paymentMethod: paymentMethod, // Selected from UI
       };
 
       const res = await bookingAPI.createBooking(payload);
       resetBooking();
-      // Navigate to ticket using the ticket ID from the response
       const ticketId = res.data?.booking?.ticketId || res.data?.ticketId;
       navigate(`/ticket/${ticketId}`);
     } catch (err) {
       console.error("Booking error:", err.response?.data || err.message);
-      alert(err.response?.data?.message || 'பதிவில் பிழை ஏற்பட்டுள்ளது. மீண்டும் முயற்சிக்கவும்.');
+      
+      if (err.response?.data?.errors) {
+        const errorMsgs = err.response.data.errors.map(e => e.message).join('\n');
+        alert(`பதிவில் பிழை:\n${errorMsgs}`);
+      } else {
+        alert(err.response?.data?.message || 'பதிவில் பிழை ஏற்பட்டுள்ளது. மீண்டும் முயற்சிக்கவும்.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -223,10 +242,24 @@ export function Book() {
             </div>
 
             <div className="glassmorphism rounded-card shadow-sm p-6 border border-white/40">
-              <h3 className="text-xl font-bold mb-4 flex items-center"><Wallet className="mr-2"/> கட்டண முறை</h3>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold flex items-center"><Wallet className="mr-2"/> கட்டண முறை</h3>
+                <span className="text-[12px] bg-green-100 text-green-700 px-2 py-1 rounded-full font-bold">மாதிரி முறை (இலவசம்)</span>
+              </div>
               <div className="grid grid-cols-2 gap-4">
-                {['UPI', 'கார்டு', 'நெட் பேங்கிங்', 'வாலட்'].map(opt => (
-                   <button key={opt} className={`p-4 rounded-xl border-2 font-bold text-center ${opt === 'UPI' ? 'border-primary bg-blue-50 text-primary' : 'border-gray-200 text-gray-500'}`}>{opt}</button>
+                {[
+                  { id: 'upi', label: 'UPI' },
+                  { id: 'card', label: 'கார்டு' },
+                  { id: 'netbanking', label: 'நெட் பேங்கிங்' },
+                  { id: 'wallet', label: 'வாலட்' }
+                ].map(opt => (
+                   <button 
+                     key={opt.id} 
+                     onClick={() => setLocalPaymentMethod(opt.id)}
+                     className={`p-4 rounded-xl border-2 font-bold text-center transition ${paymentMethod === opt.id ? 'border-primary bg-blue-50 text-primary scale-[1.02]' : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}
+                   >
+                     {opt.label}
+                   </button>
                 ))}
               </div>
             </div>

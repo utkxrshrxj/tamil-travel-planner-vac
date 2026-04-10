@@ -1,4 +1,5 @@
 const TravelOption = require('../models/TravelOption');
+const externalApiService = require('../services/externalApiService');
 
 // Tamil city name mappings
 const CITY_ALIASES = {
@@ -19,6 +20,9 @@ const CITY_ALIASES = {
   'கடலூர்': 'CDL', 'cuddalore': 'CDL',
   'ஓட்டி': 'UAM', 'ooty': 'UAM',
   'முண்டு': 'MDU',
+  'டெல்லி': 'DEL', 'delhi': 'DEL', 'tilli': 'DEL', 'டெெல்லி': 'DEL',
+  'பெங்களூர்': 'SBC', 'bangalore': 'SBC', 'பெங்களூரு': 'SBC',
+  'मुंबई': 'BOM', 'mumbai': 'BOM', 'மும்பை': 'BOM',
   'புதுச்சேரி': 'PDY', 'pondicherry': 'PDY', 'puducherry': 'PDY',
 };
 
@@ -70,7 +74,27 @@ const searchTravel = async (req, res, next) => {
       query.$or = [{ days: { $exists: false } }, { days: { $size: 0 } }, { days: dayName }];
     }
 
-    const options = await TravelOption.find(query).sort({ 'pricing.0.price': 1 });
+    // --- Real-time API integration ---
+    let externalOptions = [];
+    if (type === 'flight') {
+      const flightResults = await externalApiService.searchFlights(sourceCode, destCode, date);
+      externalOptions = [...externalOptions, ...flightResults];
+    } else if (type === 'train') {
+      const trainResults = await externalApiService.searchTrains(sourceCode, destCode);
+      externalOptions = [...externalOptions, ...trainResults];
+    } else if (!type || type === 'all' || type === 'any') {
+      // Fetch both if no type specified
+      const [flightResults, trainResults] = await Promise.all([
+        externalApiService.searchFlights(sourceCode, destCode, date),
+        externalApiService.searchTrains(sourceCode, destCode)
+      ]);
+      externalOptions = [...flightResults, ...trainResults];
+    }
+
+    const localOptions = await TravelOption.find(query).sort({ 'pricing.0.price': 1 }).lean();
+    
+    // Merge local and external (Prefer real-time if same train/flight, but for now just combine)
+    const options = [...externalOptions, ...localOptions];
 
     if (options.length === 0) {
       return res.status(200).json({

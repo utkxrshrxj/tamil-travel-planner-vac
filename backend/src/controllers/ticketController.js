@@ -1,6 +1,7 @@
 const Ticket = require('../models/Ticket');
 const Booking = require('../models/Booking');
 const SavedTicket = require('../models/SavedTicket');
+const externalApiService = require('../services/externalApiService');
 
 // @desc    Get ticket by ticket ID
 // @route   GET /api/tickets/:ticketId
@@ -30,9 +31,21 @@ const getTicketById = async (req, res, next) => {
 // @access  Public (PNR check is public)
 const getTicketByPNR = async (req, res, next) => {
   try {
-    const ticket = await Ticket.findOne({ pnrNumber: req.params.pnrNumber });
+    let ticket = await Ticket.findOne({ pnrNumber: req.params.pnrNumber });
 
     if (!ticket) {
+      // Try external API
+      console.log(`PNR ${req.params.pnrNumber} not found locally, checking external API...`);
+      const externalTicket = await externalApiService.checkPNRStatus(req.params.pnrNumber);
+      
+      if (externalTicket) {
+        return res.status(200).json({
+          success: true,
+          data: externalTicket,
+          isExternal: true
+        });
+      }
+
       return res.status(404).json({
         success: false,
         message: 'PNR எண் தவறானது அல்லது கிடைக்கவில்லை', // Invalid or not found PNR

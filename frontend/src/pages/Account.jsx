@@ -171,7 +171,7 @@ export function Account() {
                   <div><label className="text-sm text-brandMutedText font-semibold">பெயர்</label><p className="font-bold text-lg">{user?.username || '-'}</p></div>
                   <div><label className="text-sm text-brandMutedText font-semibold">மின்னஞ்சல்</label><p className="font-bold text-lg">{user?.email || '-'}</p></div>
                   <div><label className="text-sm text-brandMutedText font-semibold">வயது</label><p className="font-bold text-lg">{user?.age || '-'}</p></div>
-                  <div><label className="text-sm text-brandMutedText font-semibold">பாலினம்</label><p className="font-bold text-lg">{(user?.gender === 'male' || user?.gender === 'ஆண்') ? 'ஆண்' : (user?.gender === 'female' || user?.gender === 'பெண்') ? 'பெண்' : user?.gender || '-'}</p></div>
+                  <div><label className="text-sm text-brandMutedText font-semibold">பாலினம்</label><p className="font-bold text-lg">{(user?.gender === 'male' || user?.gender === 'ஆண்') ? 'ஆண்' : (user?.gender === 'female' || user?.gender === 'பெண்') ? 'பெண்' : (user?.gender === 'transgender' || user?.gender === 'திருநங்கை / திருநம்பி') ? 'திருநங்கை / திருநம்பி' : user?.gender || '-'}</p></div>
                 </div>
               ) : (
                 <div className="space-y-4 max-w-md">
@@ -193,7 +193,7 @@ export function Account() {
                       <select value={editForm.gender} onChange={(e) => setEditForm({...editForm, gender: e.target.value})} className="input-field mt-1">
                         <option value="ஆண்">ஆண்</option>
                         <option value="பெண்">பெண்</option>
-                        <option value="மற்றவை">மற்றவை</option>
+                        <option value="திருநங்கை / திருநம்பி">திருநங்கை / திருநம்பி</option>
                       </select>
                     </div>
                   </div>
@@ -222,7 +222,9 @@ export function Account() {
                       </div>
                       <div className="mt-4 md:mt-0 flex space-x-3">
                           <button onClick={() => navigate(`/ticket/${b.ticketId?.ticketId || b.ticketId || b._id}`)} className="text-primary font-bold bg-blue-50 px-4 py-2 rounded-btn">டிக்கெட் பார்</button>
-                          {b.bookingStatus !== 'cancelled' && <button onClick={() => handleCancel(b.bookingId)} className="text-brandRed font-bold bg-red-50 px-4 py-2 rounded-btn">ரத்து செய்</button>}
+                          {b.bookingStatus !== 'cancelled' && new Date(b.travelDate).setHours(0,0,0,0) >= new Date().setHours(0,0,0,0) && (
+                            <button onClick={() => handleCancel(b.bookingId)} className="text-brandRed font-bold bg-red-50 px-4 py-2 rounded-btn">ரத்து செய்</button>
+                          )}
                       </div>
                    </div>
                  )) : (

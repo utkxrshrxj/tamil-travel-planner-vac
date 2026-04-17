@@ -82,7 +82,7 @@ export function Login() {
                   <select name="gender" value={formData.gender} onChange={handleChange} className="input-field">
                     <option value="ஆண்">ஆண்</option>
                     <option value="பெண்">பெண்</option>
-                    <option value="மற்றவை">மற்றவை</option>
+                    <option value="திருநங்கை / திருநம்பி">திருநங்கை / திருநம்பி</option>
                   </select>
                 </div>
               </div>

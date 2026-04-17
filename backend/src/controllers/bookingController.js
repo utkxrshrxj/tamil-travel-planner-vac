@@ -266,6 +266,17 @@ const cancelBooking = async (req, res, next) => {
       });
     }
 
+    // NEW: Prevent cancellation of past journeys
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const travelDate = new Date(booking.travelDate);
+    if (travelDate < today) {
+      return res.status(400).json({
+        success: false,
+        message: 'முடிந்த பயணத்தை ரத்து செய்ய முடியாது', // Cannot cancel past journey
+      });
+    }
+
     if (booking.bookingStatus === 'completed') {
       return res.status(400).json({
         success: false,

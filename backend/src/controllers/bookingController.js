@@ -18,6 +18,50 @@ const createBooking = async (req, res, next) => {
       paymentMethod,
     } = req.body;
 
+    // 0. Prevent booking for past dates
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDate = new Date(travelDate);
+    if (selectedDate < today) {
+      return res.status(400).json({
+        success: false,
+        message: 'கடந்த தேதிகளுக்கு முன்பதிவு செய்ய முடியாது',
+      });
+    }
+
+    // 0.1 Strict ID Validation
+    for (const [idx, p] of passengers.entries()) {
+      const cleanId = p.idNumber ? p.idNumber.replace(/\s/g, '') : '';
+      if (p.idType === 'aadhaar' && !/^\d{12}$/.test(cleanId)) {
+        return res.status(400).json({
+          success: false,
+          message: `பயணி ${idx + 1}-க்கு சரியான 12 இலக்க ஆதார் எண்ணை உள்ளிடவும்.`,
+        });
+      }
+      if (p.idType === 'pan' && !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(cleanId.toUpperCase())) {
+        return res.status(400).json({
+          success: false,
+          message: `பயணி ${idx + 1}-க்கு சரியான 10 இலக்க PAN எண்ணை உள்ளிடவும்.`,
+        });
+      }
+      if (p.idType === 'passport' && cleanId.length !== 8) {
+        return res.status(400).json({
+          success: false,
+          message: `பயணி ${idx + 1}-க்கு சரியான 8 இலக்க Passport எண்ணை உள்ளிடவும்.`,
+        });
+      }
+    }
+
+    // 0.2 Backend Validation for Gender
+    for (const [idx, p] of passengers.entries()) {
+      if (!['male', 'female', 'transgender'].includes(p.gender)) {
+        return res.status(400).json({
+          success: false,
+          message: `பயணி ${idx + 1}-க்கு சரியான பாலினத்தை தேர்ந்தெடுக்கவும்.`,
+        });
+      }
+    }
+
     // 1. Validate travel option exists
     let travelOption;
     const isExternal = travelOptionId && travelOptionId.startsWith('ext-');

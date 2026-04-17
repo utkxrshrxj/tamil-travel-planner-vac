@@ -24,6 +24,12 @@ export function Book() {
 
   const handlePassengerChange = (index, field, value) => {
     const newPass = [...passengers];
+    
+    // Clear ID number if type changes
+    if (field === 'idType' && newPass[index][field] !== value) {
+      newPass[index]['idNumber'] = '';
+    }
+    
     newPass[index][field] = value;
     setBookingData({ passengers: newPass });
   };
@@ -39,6 +45,75 @@ export function Book() {
     setBookingData({ passengers: newPass });
   };
 
+  const getIDConfig = (type) => {
+    switch (type) {
+      case 'ஆதார்': return { maxLength: 14, placeholder: '1234 5678 9012', label: '12-இலக்க ஆதார் எண்' };
+      case 'நிரந்தரக் கணக்கு எண்': return { maxLength: 10, placeholder: 'ABCDE1234F', label: '10-இலக்க PAN எண்' };
+      case 'கடவுச்சீட்டு': return { maxLength: 8, placeholder: 'A1234567', label: '8-இலக்க Passport எண்' };
+      case 'வாக்காளர் அட்டை': return { maxLength: 10, placeholder: 'ABC1234567', label: '10-இலக்க Voter ID' };
+      default: return { maxLength: 20, placeholder: 'எண்', label: 'அடையாள எண்' };
+    }
+  };
+
+  const formatIDNumber = (type, val) => {
+    let cleanVal = val.replace(/\s/g, '');
+    if (type === 'ஆதார்') {
+      cleanVal = cleanVal.replace(/\D/g, '').substring(0, 12);
+      const parts = cleanVal.match(/.{1,4}/g) || [];
+      return parts.join(' ');
+    }
+    if (type === 'நிரந்தரக் கணக்கு எண்') {
+      return cleanVal.substring(0, 10).toUpperCase();
+    }
+    if (type === 'கடவுச்சீட்டு') {
+      return cleanVal.substring(0, 8).toUpperCase();
+    }
+    if (type === 'வாக்காளர் அட்டை') {
+      return cleanVal.substring(0, 10).toUpperCase();
+    }
+    return val;
+  };
+
+  const validateStep1 = () => {
+    if (!travelDate) {
+      alert('தயவுசெய்து பயணத் தேதியைத் தேர்ந்தெடுக்கவும்.');
+      return false;
+    }
+
+    for (let i = 0; i < passengers.length; i++) {
+      const p = passengers[i];
+      if (!p.name || !p.age) {
+        alert(`பயணி ${i + 1}-ன் பெயர் மற்றும் வயதை நிரப்பவும்.`);
+        return false;
+      }
+      
+      const cleanId = p.idNumber.replace(/\s/g, '');
+      if (p.idType === 'ஆதார்' && cleanId.length !== 12) {
+        alert(`பயணி ${i + 1}-க்கு சரியான 12 இலக்க ஆதார் எண்ணை உள்ளிடவும்.`);
+        return false;
+      }
+      if (p.idType === 'நிரந்தரக் கணக்கு எண்' && cleanId.length !== 10) {
+        alert(`பயணி ${i + 1}-க்கு சரியான 10 இலக்க PAN எண்ணை உள்ளிடவும்.`);
+        return false;
+      }
+      if (p.idType === 'கடவுச்சீட்டு' && cleanId.length !== 8) {
+        alert(`பயணி ${i + 1}-க்கு சரியான 8 இலக்க Passport எண்ணை உள்ளிடவும்.`);
+        return false;
+      }
+      if (p.idType === 'வாக்காளர் அட்டை' && cleanId.length !== 10) {
+        alert(`பயணி ${i + 1}-க்கு சரியான 10 இலக்க Voter ID-ஐ உள்ளிடவும்.`);
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handleNextStep = () => {
+    if (validateStep1()) {
+      setStep(2);
+    }
+  };
+
   const calculateTotal = () => {
     const base = travelClass.price * passengers.length;
     const tax = Math.round(base * 0.05);
@@ -50,9 +125,11 @@ export function Book() {
   };
 
   const handleSubmit = async () => {
-    // Frontend Validation
-    if (!travelDate) {
-      alert('தயவுசெய்து பயணத் தேதியைத் தேர்ந்தெடுக்கவும்.');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDate = new Date(travelDate);
+    if (selectedDate < today) {
+      alert('கடந்த தேதிகளுக்கு முன்பதிவு செய்ய முடியாது (Cannot book for past dates).');
       return;
     }
 
@@ -92,9 +169,9 @@ export function Book() {
         passengers: passengers.map(p => ({
           name: p.name.trim(),
           age: parseInt(p.age),
-          gender: p.gender === 'ஆண்' ? 'male' : p.gender === 'பெண்' ? 'female' : 'other',
+          gender: p.gender === 'ஆண்' ? 'male' : p.gender === 'பெண்' ? 'female' : 'transgender',
           idType: p.idType === 'ஆதார்' ? 'aadhaar' : p.idType === 'நிரந்தரக் கணக்கு எண்' ? 'pan' : p.idType === 'கடவுச்சீட்டு' ? 'passport' : 'voter_id',
-          idNumber: p.idNumber
+          idNumber: p.idNumber.replace(/\s/g, '')
         })),
         foodPreference: foodPreference === 'சைவம்' ? 'veg' : foodPreference === 'அசைவம்' ? 'non-veg' : 'no_food',
         luggageAllowance: parseInt(luggageAllowance) || 15,
@@ -181,7 +258,9 @@ export function Book() {
                     <div>
                       <label className="block text-brandMutedText text-sm mb-1 font-semibold">பாலினம்</label>
                       <select value={p.gender} onChange={(e) => handlePassengerChange(idx, 'gender', e.target.value)} className="input-field">
-                        <option>ஆண்</option><option>பெண்</option><option>மற்றவை</option>
+                        <option>ஆண்</option>
+                        <option>பெண்</option>
+                        <option>திருநங்கை / திருநம்பி</option>
                       </select>
                     </div>
                   </div>
@@ -199,7 +278,20 @@ export function Book() {
                   </div>
                   <div>
                     <label className="block text-brandMutedText text-sm mb-1 font-semibold">அடையாள எண்</label>
-                    <input type="text" value={p.idNumber} onChange={(e) => handlePassengerChange(idx, 'idNumber', e.target.value)} className="input-field" placeholder="எண்"/>
+                    <div className="relative">
+                      <input 
+                        type="text" 
+                        value={p.idNumber} 
+                        maxLength={getIDConfig(p.idType).maxLength}
+                        onChange={(e) => handlePassengerChange(idx, 'idNumber', formatIDNumber(p.idType, e.target.value))} 
+                        className="input-field" 
+                        placeholder={getIDConfig(p.idType).placeholder}
+                      />
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 bg-white/80 px-1 rounded">
+                        {p.idNumber.replace(/\s/g, '').length} / {p.idType === 'ஆதார்' ? 12 : p.idType === 'நிரந்தரக் கணக்கு எண்' ? 10 : p.idType === 'கடவுச்சீட்டு' ? 8 : 10}
+                      </div>
+                    </div>
+                    <p className="text-[10px] text-slate-500 mt-1 ml-1">{getIDConfig(p.idType).label}</p>
                   </div>
                 </div>
               </div>
@@ -211,7 +303,7 @@ export function Book() {
               </button>
             )}
 
-            <button onClick={() => setStep(2)} className="btn-primary w-full text-xl py-4 mt-8 shadow-lg">தொடர்க</button>
+            <button onClick={handleNextStep} className="btn-primary w-full text-xl py-4 mt-8 shadow-lg transition-all hover:scale-[1.01]">தொடர்க</button>
           </div>
         )}
 

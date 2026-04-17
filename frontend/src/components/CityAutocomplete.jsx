@@ -10,7 +10,7 @@ const defaultCities = [
   { name: 'திருநெல்வேலி', train: 'TEN', flight: 'TCR' },
   { name: 'பெங்களூரு', train: 'SBC', flight: 'BLR' },
   { name: 'ஹைதராபாத்', train: 'HYB', flight: 'HYD' },
-  { name: 'மும்பை', train: 'BCT', flight: 'BOM' },
+  { name: 'மும்பை', train: 'CSMT', flight: 'BOM' },
   { name: 'டெல்லி', train: 'NDLS', flight: 'DEL' },
   { name: 'கொல்கத்தா', train: 'HWH', flight: 'CCU' }
 ];

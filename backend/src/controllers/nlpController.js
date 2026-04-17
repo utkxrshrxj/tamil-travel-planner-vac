@@ -8,7 +8,7 @@ const TRAVEL_TYPES = {
 };
 
 const CITY_MAP = {
-  சென்னை: 'MAS', madras: 'MAS', chennai: 'MAS', madras: 'MAS',
+  சென்னை: 'MAS', madras: 'MAS', chennai: 'MAS',
   கோவை: 'CBE', 'கோயமு': 'CBE', 'கோயம்': 'CBE', 'கோயம்பு': 'CBE', coimbatore: 'CBE', kovai: 'CBE', கோயம்புத்தூர்: 'CBE', கோயமுத்தூர்: 'CBE', CBE: 'CBE', coimb: 'CBE',
   மதுரை: 'MDU', madurai: 'MDU', MDU: 'MDU',
   திருச்சி: 'TPJ', trichy: 'TPJ', திருச்சிராப்பள்ளி: 'TPJ', TPJ: 'TPJ',
@@ -21,6 +21,9 @@ const CITY_MAP = {
   புதுச்சேரி: 'PDY', pondicherry: 'PDY', பாண்டிச்சேரி: 'PDY',
   ஓட்டி: 'UAM', ooty: 'UAM', உதகமண்டலம்: 'UAM',
   பெங்களூர்: 'SBC', bangalore: 'SBC', பெங்களூரு: 'SBC',
+  ஹைதராபாத்: 'HYB', hyderabad: 'HYB',
+  மும்பை: 'BOM', mumbai: 'BOM',
+  கொல்கத்தா: 'HWH', kolkata: 'HWH',
   டெல்லி: 'DLI', delhi: 'DLI', 'old delhi': 'DLI', DLI: 'DLI', DEL: 'DLI', 'டிெல்லி': 'DLI',
 };
 const DATE_KEYWORDS = {

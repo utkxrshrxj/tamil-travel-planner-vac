@@ -204,6 +204,7 @@ export function Home() {
                  <input 
                    type="date" 
                    value={travelDate} 
+                   min={new Date().toISOString().split('T')[0]}
                    onChange={(e) => setSearchParams({ travelDate: e.target.value })}
                    className="input-field pl-12 bg-white/40 focus:bg-white/70 text-lg font-medium" 
                  />

@@ -17,6 +17,8 @@ const STATION_MAPPING = {
   'MAA': 'MAS',  // Chennai Airport -> Chennai Central
   'BLR': 'SBC',  // Bangalore Airport -> Bangalore City
   'BOM': 'CSMT', // Mumbai Airport -> Mumbai CSMT
+  'HYD': 'HYB',  // Hyderabad Airport -> Hyderabad Deccan
+  'CCU': 'HWH',  // Kolkata Airport -> Howrah
 };
 
 /**
@@ -41,6 +43,8 @@ const IATA_MAPPING = {
   'BOM': 'BOM', // Mumbai
   'DEL': 'DEL', // Delhi
   'DLI': 'DEL', // Old Delhi -> Delhi Airport
+  'HYB': 'HYD', // Hyderabad
+  'HWH': 'CCU', // Kolkata
 };
 
 /**

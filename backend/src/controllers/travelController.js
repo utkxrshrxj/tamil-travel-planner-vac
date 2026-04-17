@@ -3,14 +3,10 @@ const externalApiService = require('../services/externalApiService');
 
 // Tamil city name mappings
 const CITY_ALIASES = {
-  'சென்னை': 'MAS',
-  'chennai': 'MAS',
-  'madras': 'MAS',
-  'msb': 'MAS',
-  'ms': 'MAS',
-  'கோவை': 'CBE', 'coimbatore': 'CBE', 'kovai': 'CBE',
+  'சென்னை': 'MAS', 'chennai': 'MAS', 'madras': 'MAS', 'msb': 'MAS', 'ms': 'MAS',
+  'கோவை': 'CBE', 'coimbatore': 'CBE', 'kovai': 'CBE', 'கோயம்புத்தூர்': 'CBE',
   'மதுரை': 'MDU', 'madurai': 'MDU',
-  'திருச்சி': 'TPJ', 'trichy': 'TPJ', 'tiruchirappalli': 'TPJ',
+  'திருச்சி': 'TPJ', 'trichy': 'TPJ', 'tiruchirappalli': 'TPJ', 'திருச்சிராப்பள்ளி': 'TPJ',
   'சேலம்': 'SA', 'salem': 'SA',
   'வேலூர்': 'VLR', 'vellore': 'VLR',
   'திருநெல்வேலி': 'TEN', 'tirunelveli': 'TEN',
@@ -26,7 +22,9 @@ const CITY_ALIASES = {
   'முண்டு': 'MDU',
   'டெல்லி': 'DLI', 'delhi': 'DLI', 'dli': 'DLI', 'tilli': 'DEL', 'டெெல்லி': 'DLI',
   'பெங்களூர்': 'SBC', 'bangalore': 'SBC', 'பெங்களூரு': 'SBC',
-  'मुंबई': 'BOM', 'mumbai': 'BOM', 'மும்பை': 'BOM',
+  'மும்பை': 'BOM', 'mumbai': 'BOM', 'मुंबई': 'BOM',
+  'ஹைதராபாத்': 'HYB', 'hyderabad': 'HYB',
+  'கொல்கத்தா': 'HWH', 'kolkata': 'HWH',
   'புதுச்சேரி': 'PDY', 'pondicherry': 'PDY', 'puducherry': 'PDY',
 };
 
@@ -43,6 +41,8 @@ const TRANSPORT_CODE_MAP = {
   'MDU': { train: 'MDU', flight: 'IXM', bus: 'MDU' },
   'CBE': { train: 'CBE', flight: 'CJB', bus: 'CBE' },
   'TPJ': { train: 'TPJ', flight: 'TRZ', bus: 'TPJ' },
+  'HYB': { train: 'HYB', flight: 'HYD', bus: 'HYB' },
+  'HWH': { train: 'HWH', flight: 'CCU', bus: 'HWH' },
 };
 
 const resolveCity = (input) => {

@@ -1029,7 +1029,16 @@ const seed = async () => {
     await TravelOption.deleteMany({});
     console.log('🗑️  Cleared existing travel options');
 
-    const inserted = await TravelOption.insertMany(travelOptions);
+    // NEW: Programmatic safety filter for airlines
+    const allowedAirlines = ['IndiGo', 'Air India', 'SpiceJet'];
+    const filteredOptions = travelOptions.filter(opt => {
+      if (opt.type === 'flight') {
+        return allowedAirlines.includes(opt.airline);
+      }
+      return true;
+    });
+
+    const inserted = await TravelOption.insertMany(filteredOptions);
     console.log(`🌱 Seeded ${inserted.length} travel options successfully`);
 
     await mongoose.disconnect();

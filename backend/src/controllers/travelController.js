@@ -97,20 +97,53 @@ const searchTravel = async (req, res, next) => {
       query.$or = [{ days: { $exists: false } }, { days: { $size: 0 } }, { days: dayName }];
     }
 
-    // --- Real-time API integration ---
+    // --- Real-time API integration (AI-Powered) ---
     let externalOptions = [];
-    if (type === 'flight') {
-      const flightResults = await externalApiService.searchFlights(sourceCode, destCode, date);
-      externalOptions = [...externalOptions, ...flightResults];
-    } else if (type === 'train') {
-      const trainResults = await externalApiService.searchTrains(sourceCode, destCode);
-      externalOptions = [...externalOptions, ...trainResults];
-    } else if (!type || type === 'all' || type === 'any') {
-      const [flightResults, trainResults] = await Promise.all([
-        externalApiService.searchFlights(sourceCode, destCode, date),
-        externalApiService.searchTrains(sourceCode, destCode)
+    
+    // Help helper to get transport-specific code
+    const getCode = (ts, t) => (TRANSPORT_CODE_MAP[ts] ? (TRANSPORT_CODE_MAP[ts][t] || ts) : ts);
+
+    if (type && type !== 'all' && type !== 'any') {
+      const sCode = getCode(baseSource, type);
+      const dCode = getCode(baseDest, type);
+      
+      try {
+        if (type === 'flight') {
+          const res = await externalApiService.searchFlights(sCode, dCode, date);
+          externalOptions = [...res];
+        } else if (type === 'train') {
+          const res = await externalApiService.searchTrains(sCode, dCode, date);
+          externalOptions = [...res];
+        } else if (type === 'bus') {
+          const res = await externalApiService.searchBuses(sCode, dCode, date);
+          externalOptions = [...res];
+        }
+      } catch (err) {
+        console.error(`Error fetching external ${type}:`, err.message);
+      }
+    } else {
+      // Fetch all via AI
+      const flightS = getCode(baseSource, 'flight');
+      const flightD = getCode(baseDest, 'flight');
+      const trainS = getCode(baseSource, 'train');
+      const trainD = getCode(baseDest, 'train');
+      const busS = getCode(baseSource, 'bus');
+      const busD = getCode(baseDest, 'bus');
+
+      const results = await Promise.allSettled([
+        externalApiService.searchFlights(flightS, flightD, date),
+        externalApiService.searchTrains(trainS, trainD, date),
+        externalApiService.searchBuses(busS, busD, date)
       ]);
-      externalOptions = [...flightResults, ...trainResults];
+
+      results.forEach((res, idx) => {
+        if (res.status === 'fulfilled') {
+          externalOptions = [...externalOptions, ...res.value];
+        } else {
+          const modes = ['flight', 'train', 'bus'];
+          console.error(`AI Fetch Failed for ${modes[idx]}:`, res.reason);
+        }
+      });
     }
 
     const localOptions = await TravelOption.find(query).sort({ 'pricing.0.price': 1 }).lean();

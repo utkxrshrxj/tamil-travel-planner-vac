@@ -180,7 +180,7 @@ const parseNLPInput = async (req, res, next) => {
     let aiParsed = null;
     
     // 1. Try Gemini
-    if (process.env.GEMINI_API_KEY) {
+    if (process.env.GEMINI_NLP_KEY) {
       console.log('Attempting AI parsing with Gemini...');
       aiParsed = await parseTravelIntent(text);
       if (aiParsed) console.log('AI Parsing successful');

@@ -68,6 +68,15 @@ const searchTravel = async (req, res, next) => {
     const baseSource = resolveCity(source);
     const baseDest = resolveCity(destination);
 
+    if (baseSource === baseDest) {
+      return res.status(200).json({
+        success: true,
+        count: 0,
+        message: 'புறப்படும் இடமும் சேருமிடமும் ஒரே நகராக இருக்கக்கூடாது', // Source and destination cannot be same
+        data: [],
+      });
+    }
+
     // Resolve specific codes for the requested transport type
     const sourceCode = (type && TRANSPORT_CODE_MAP[baseSource]) ? (TRANSPORT_CODE_MAP[baseSource][type.toLowerCase()] || baseSource) : baseSource;
     const destCode = (type && TRANSPORT_CODE_MAP[baseDest]) ? (TRANSPORT_CODE_MAP[baseDest][type.toLowerCase()] || baseDest) : baseDest;

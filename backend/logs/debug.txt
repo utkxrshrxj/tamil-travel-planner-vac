@@ -212,3 +212,201 @@ Please retry in 41.284154655s. [{"@type":"type.googleapis.com/google.rpc.Help","
 [2026-04-18T17:05:39.784Z] START AI Gen: bus | HYB -> MAS on 2026-04-21
 [2026-04-18T17:05:40.313Z] CACHE HIT: train-HYB-MAS-2026-04-21
 [2026-04-18T17:05:56.870Z] SUCCESS AI Gen: 7 bus items.
+[2026-04-23T09:29:59.391Z] START AI Gen: bus | MAS -> DEL on 2026-04-25
+[2026-04-23T09:30:14.608Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (1/2)
+[2026-04-23T09:30:18.621Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (2/2)
+[2026-04-23T09:30:19.402Z] START AI Gen: bus | MAS -> DEL on 2026-04-25
+[2026-04-23T09:30:20.739Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (1/2)
+[2026-04-23T09:30:24.753Z] ERROR AI final fail: bus -> [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-23T09:30:27.883Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (2/2)
+[2026-04-23T09:30:36.452Z] ERROR AI final fail: bus -> [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-23T09:30:53.737Z] START AI Gen: bus | MAS -> HYB on 2026-04-25
+[2026-04-23T09:30:54.320Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-23T09:30:54.334Z] START AI Gen: bus | MAS -> HYB on 2026-04-25
+[2026-04-23T09:30:57.598Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (1/2)
+[2026-04-23T09:31:01.133Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (2/2)
+[2026-04-23T09:31:07.026Z] ERROR AI final fail: bus -> [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-23T09:31:21.632Z] START AI Gen: bus | MAS -> HYB on 2026-04-25
+[2026-04-23T09:31:33.318Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (1/2)
+[2026-04-23T09:31:37.240Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (2/2)
+[2026-04-23T09:31:41.625Z] START AI Gen: bus | MAS -> HYB on 2026-04-25
+[2026-04-23T09:31:56.369Z] SUCCESS AI Gen: 7 bus items.
+[2026-04-23T09:31:58.331Z] SUCCESS AI Gen: 7 bus items.
+[2026-04-24T10:16:37.107Z] START AI Gen: train | SBC -> CBE on 2026-04-25
+[2026-04-24T10:16:57.124Z] START AI Gen: train | SBC -> CBE on 2026-04-25
+[2026-04-24T10:16:58.056Z] SUCCESS AI Gen: 6 train items.
+[2026-04-24T10:17:05.241Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (1/2)
+[2026-04-24T10:17:11.930Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (2/2)
+[2026-04-24T10:17:18.776Z] ERROR AI final fail: train -> [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-24T10:57:39.476Z] START AI Gen: flight | விசாகப்பட்டினம் -> அகர்தலா on 2026-04-25
+[2026-04-24T10:57:59.462Z] START AI Gen: flight | விசாகப்பட்டினம் -> அகர்தலா on 2026-04-25
+[2026-04-24T10:58:00.864Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (1/2)
+[2026-04-24T10:58:04.484Z] Transient error (Gemini API Timeout), retrying... (1/2)
+[2026-04-24T10:58:04.500Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (2/2)
+[2026-04-24T10:58:07.766Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (2/2)
+[2026-04-24T10:58:10.851Z] ERROR AI final fail: flight -> [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-24T10:58:14.931Z] START AI Gen: train | விசாகப்பட்டினம் -> அகர்தலா on 2026-04-25
+[2026-04-24T10:58:15.458Z] ERROR AI final fail: flight -> [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-24T10:58:18.310Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying... (1/2)
+[2026-04-24T10:58:20.985Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-24T10:58:47.585Z] START AI Gen: flight | BOM -> MAA on 2026-04-25
+[2026-04-24T10:58:48.120Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-24T10:58:48.136Z] START AI Gen: flight | BOM -> MAA on 2026-04-25
+[2026-04-24T10:58:48.521Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-24T11:08:30.943Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:31.081Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:31.260Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:31.403Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:31.595Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:31.750Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:31.915Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:32.073Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:32.257Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:32.359Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:32.536Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:32.628Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:32.818Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:32.935Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:33.122Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:33.286Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:33.496Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:33.607Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:33.751Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:08:33.910Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods..
+[2026-04-24T11:17:58.174Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:18:01.715Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 4000ms... (2/2)
+[2026-04-24T11:18:06.611Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-24T11:18:08.017Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:18:16.173Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 4000ms... (2/2)
+[2026-04-24T11:18:22.287Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-24T11:18:22.639Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-24T11:18:22.798Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.841Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.852Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.881Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.894Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.905Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.916Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.923Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.930Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.937Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.947Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.954Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.961Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.967Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.974Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.984Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.990Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:22.995Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:23.000Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:23.007Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:23.014Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:23.020Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:18:23.026Z] COOLDOWN ACTIVE: Skipping AI call until 4:49:22 pm
+[2026-04-24T11:20:14.749Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:20:18.789Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 4000ms... (2/2)
+[2026-04-24T11:20:27.243Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-24T11:20:43.359Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:20:45.894Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:20:49.105Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 4000ms... (2/2)
+[2026-04-24T11:20:57.443Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-24T11:20:57.476Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:21:01.721Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:21:05.319Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 4000ms... (2/2)
+[2026-04-24T11:21:12.394Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-24T11:21:26.716Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:21:28.711Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:21:35.105Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 4000ms... (2/2)
+[2026-04-24T11:21:43.141Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-24T11:21:43.151Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:21:43.494Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-24T11:22:33.155Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:22:34.909Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:22:38.250Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 4000ms... (2/2)
+[2026-04-24T11:22:45.814Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later..
+[2026-04-24T11:22:45.837Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:22:58.358Z] START AI Gen: flight | HYD -> DEL on 2026-04-25
+[2026-04-24T11:22:59.602Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:23:03.748Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 4000ms... (2/2)
+[2026-04-24T11:23:05.882Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:23:08.173Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-24T11:23:08.223Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-24T11:23:14.853Z] START AI Gen: flight | HYD -> DEL on 2026-04-25
+[2026-04-24T11:23:14.900Z] COOLDOWN ACTIVE: Skipping AI call until 4:54:08 pm
+[2026-04-24T11:23:14.902Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:23:14.902Z] COOLDOWN ACTIVE: Skipping AI call until 4:54:08 pm
+[2026-04-24T11:23:14.904Z] START AI Gen: bus | HYB -> DEL on 2026-04-25
+[2026-04-24T11:23:14.906Z] COOLDOWN ACTIVE: Skipping AI call until 4:54:08 pm
+[2026-04-24T11:24:24.328Z] START AI Gen: flight | HYD -> DEL on 2026-04-25
+[2026-04-24T11:24:24.330Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:24:24.332Z] START AI Gen: bus | HYB -> DEL on 2026-04-25
+[2026-04-24T11:24:24.614Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] The service is currently unavailable.), retrying in 2000ms... (1/2)
+[2026-04-24T11:24:26.107Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:24:26.430Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:24:26.744Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] The service is currently unavailable.), retrying in 4000ms... (2/2)
+[2026-04-24T11:24:28.184Z] ERROR AI final fail: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [400 Bad Request] API key expired. Please renew the API key. [{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"API_KEY_INVALID","domain":"googleapis.com","metadata":{"service":"generativelanguage.googleapis.com"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"API key expired. Please renew the API key."}].
+[2026-04-24T11:24:28.822Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-24T11:24:31.122Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-24T11:24:31.171Z] START AI Gen: flight | HYD -> DEL on 2026-04-25
+[2026-04-24T11:24:31.226Z] COOLDOWN ACTIVE: Skipping AI call until 4:55:31 pm
+[2026-04-24T11:24:31.230Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:24:31.231Z] COOLDOWN ACTIVE: Skipping AI call until 4:55:31 pm
+[2026-04-24T11:24:31.232Z] START AI Gen: bus | HYB -> DEL on 2026-04-25
+[2026-04-24T11:24:31.233Z] COOLDOWN ACTIVE: Skipping AI call until 4:55:31 pm
+[2026-04-24T11:24:37.722Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:24:37.723Z] COOLDOWN ACTIVE: Skipping AI call until 4:55:31 pm
+[2026-04-24T11:24:40.946Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:24:40.947Z] COOLDOWN ACTIVE: Skipping AI call until 4:55:31 pm
+[2026-04-24T11:24:40.955Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:24:40.956Z] COOLDOWN ACTIVE: Skipping AI call until 4:55:31 pm
+[2026-04-24T11:25:05.421Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:25:05.422Z] COOLDOWN ACTIVE: Skipping AI call until 4:55:31 pm
+[2026-04-24T11:25:05.434Z] START AI Gen: train | HYB -> DLI on 2026-04-25
+[2026-04-24T11:25:05.435Z] COOLDOWN ACTIVE: Skipping AI call until 4:55:31 pm
+[2026-04-24T11:26:11.197Z] START AI Gen: flight | HYD -> DEL on 2026-04-25
+[2026-04-24T11:26:14.172Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:26:16.993Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 4000ms... (2/2)
+[2026-04-24T11:26:21.465Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-24T11:26:21.485Z] START AI Gen: flight | HYD -> DEL on 2026-04-25
+[2026-04-24T11:26:21.525Z] COOLDOWN ACTIVE: Skipping AI call until 4:57:21 pm
+[2026-04-24T11:27:23.341Z] START AI Gen: flight | HYD -> DEL on 2026-04-25
+[2026-04-24T11:27:26.085Z] Transient error ([GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.), retrying in 2000ms... (1/2)
+[2026-04-24T11:27:28.635Z] QUOTA EXCEEDED (429): Entering cooldown for 60s.
+[2026-04-24T11:27:28.646Z] START AI Gen: flight | HYD -> DEL on 2026-04-25
+[2026-04-24T11:27:28.647Z] COOLDOWN ACTIVE: Skipping AI call until 4:58:28 pm
+[2026-04-24T11:31:55.290Z] QUOTA EXCEEDED (429): Entering cooldown for 30s.
+[2026-04-24T11:31:55.365Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.370Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.374Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.379Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.386Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.390Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.394Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.400Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.404Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.409Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.413Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.420Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.426Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.432Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:31:55.436Z] COOLDOWN ACTIVE: Skipping AI call until 5:02:25 pm
+[2026-04-24T11:32:46.928Z] START AI Gen: train | HYB -> MAS on 2026-04-25
+[2026-04-24T11:32:51.270Z] SUCCESS AI Gen: 5 train items.
+[2026-04-24T11:32:51.334Z] CACHE HIT: train-HYB-MAS-2026-04-25
+[2026-04-24T11:33:43.136Z] START AI Gen: train | CSMT -> SBC on 2026-04-25
+[2026-04-24T11:33:45.940Z] SUCCESS AI Gen: 5 train items.
+[2026-04-24T11:33:45.950Z] CACHE HIT: train-CSMT-SBC-2026-04-25
+[2026-04-24T11:36:15.333Z] START AI Gen: train | DLI -> DLI on 2026-04-25
+[2026-04-24T11:36:21.196Z] SUCCESS AI Gen: 5 train items.
+[2026-04-24T11:36:21.227Z] CACHE HIT: train-DLI-DLI-2026-04-25
+[2026-04-24T11:39:10.855Z] SKIP AI Gen: Source and Destination same (DLI -> DLI)
+[2026-04-24T11:39:10.919Z] SKIP AI Gen: Source and Destination same (DLI -> DLI)
+[2026-04-24T11:39:21.449Z] START AI Gen: flight | DEL -> IXM on 2026-04-25
+[2026-04-24T11:39:25.360Z] SUCCESS AI Gen: 5 flight items.
+[2026-04-24T11:39:25.375Z] CACHE HIT: flight-DEL-IXM-2026-04-25
+[2026-04-24T11:43:50.184Z] START AI Gen: flight | BLR -> DEL on 2026-04-25
+[2026-04-24T11:43:54.789Z] SUCCESS AI Gen: 7 flight items.
+[2026-04-24T11:43:54.845Z] CACHE HIT: flight-BLR-DEL-2026-04-25
+[2026-04-24T12:14:16.058Z] START AI Gen: train | MDU -> SA on 2026-04-25
+[2026-04-24T12:14:20.912Z] SUCCESS AI Gen: 4 train items.
+[2026-04-24T12:14:20.975Z] CACHE HIT: train-MDU-SA-2026-04-25

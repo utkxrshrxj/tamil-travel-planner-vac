@@ -1,10 +1,10 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const nlpGenAI = new GoogleGenerativeAI(process.env.GEMINI_NLP_KEY);
+const travelGenAI = new GoogleGenerativeAI(process.env.GEMINI_TRAVEL_KEY);
 
-// Default model - Using gemini-2.5-flash which is available for this key
-let currentModelName = "gemini-2.5-flash"; 
-let model = genAI.getGenerativeModel({ model: currentModelName });
+// Default model name
+const DEFAULT_MODEL = "gemini-2.5-flash-lite"; 
 
 // --- CACHE & COOLDOWN STATE ---
 const aiCache = new Map();
@@ -12,31 +12,70 @@ let quotaCooldownUntil = null;
 
 const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
-// --- STATION NAME MAPPING ---
-const CODE_TO_NAME_TAMIL = {
-  'MAS': 'சென்னை', 'MSB': 'சென்னை', 'MAA': 'சென்னை',
-  'CBE': 'கோவை', 'IXM': 'மதுரை', 'MDU': 'மதுரை',
-  'TPJ': 'திருச்சி', 'TRZ': 'திருச்சி',
-  'SA': 'சேலம்', 'VLR': 'வேலூர்',
-  'TEN': 'திருநெல்வேலி', 'NCJ': 'நாகர்கோவில்',
-  'TJ': 'தஞ்சாவூர்', 'ED': 'ஈரோடு',
-  'TUT': 'தூத்துக்குடி', 'TCR': 'தூத்துக்குடி',
-  'KMU': 'கும்பகோணம்', 'PGT': 'பாளையங்கோட்டை',
-  'VM': 'விழுப்புரம்', 'CDL': 'கடலூர்',
-  'UAM': 'ஓட்டி', 'DLI': 'டெல்லி', 'DEL': 'டெல்லி',
-  'SBC': 'பெங்களூர்', 'BLR': 'பெங்களூர்',
-  'BOM': 'मुंबई (மும்பை)', 'HYB': 'ஹைதராபாத்', 'HYD': 'ஹைதராபாத்',
-  'HWH': 'கொல்கத்தா', 'CCU': 'கொல்கத்தா',
-  'PDY': 'புதுச்சேரி'
+const fs = require('fs');
+const path = require('path');
+
+const logFile = path.join(__dirname, '../../logs/debug.txt');
+const logToDebug = (msg) => {
+  try {
+    const timestamp = new Date().toISOString();
+    fs.appendFileSync(logFile, `[${timestamp}] ${msg}\n`);
+  } catch (e) {
+    console.error('Logging failed', e);
+  }
+};
+
+/**
+ * Common helper to call Gemini with retries and timeout
+ */
+const callGeminiWithRetry = async (aiInstance, prompt, maxRetries = 2) => {
+  const model = aiInstance.getGenerativeModel({ model: DEFAULT_MODEL });
+  if (quotaCooldownUntil && Date.now() < quotaCooldownUntil) {
+    logToDebug(`COOLDOWN ACTIVE: Skipping AI call until ${new Date(quotaCooldownUntil).toLocaleTimeString()}`);
+    return null;
+  }
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Gemini API Timeout')), 25000)
+    );
+
+    try {
+      const resultPromise = model.generateContent(prompt);
+      const result = await Promise.race([resultPromise, timeoutPromise]);
+      const response = await result.response;
+      return response.text();
+    } catch (error) {
+      const errorMsg = error.message || String(error);
+      const is429 = errorMsg.includes('429') || errorMsg.includes('quota');
+      const isTransient = errorMsg.includes('503') || errorMsg.includes('504') || errorMsg.includes('Timeout') || errorMsg.includes('high demand');
+      
+      if (is429) {
+        logToDebug(`QUOTA EXCEEDED (429): Entering cooldown for 30s.`);
+        quotaCooldownUntil = Date.now() + 30000;
+        return null;
+      }
+
+      if (isTransient && attempt < maxRetries) {
+        const delay = 2000 * (attempt + 1);
+        logToDebug(`Transient error (${errorMsg}), retrying in ${delay}ms... (${attempt + 1}/${maxRetries})`);
+        await new Promise(res => setTimeout(res, delay));
+        continue;
+      }
+      
+      logToDebug(`ERROR AI final fail: ${errorMsg}.`);
+      return null;
+    }
+  }
+  return null;
 };
 
 /**
  * Parses travel intent from a user's text (Tamil or English)
- * Returns a structured object with source, destination, travelType, etc.
  */
 const parseTravelIntent = async (text) => {
-  if (!process.env.GEMINI_API_KEY) {
-    console.error("GEMINI_API_KEY is missing in .env");
+  if (!process.env.GEMINI_NLP_KEY) {
+    console.error("GEMINI_NLP_KEY is missing in .env");
     return null;
   }
 
@@ -65,18 +104,18 @@ const parseTravelIntent = async (text) => {
     - "டெல்லியிலிருந்து" (From Delhi) -> sourceCode: "DLI".
     - "டெல்லிக்கு" (To Delhi) -> destinationCode: "DLI".
     
+    IMPORTANT: sourceCode and destinationCode MUST be different. If the user mentions only one city, detect if it's source or destination using suffixes like "-irundhu" or "-ku". NEVER set both to the same code.
+    
     Return ONLY JSON.
   `;
 
   try {
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    let jsonStr = response.text();
-    
-    // Clean JSON if Gemini returns markdown blocks
-    jsonStr = jsonStr.replace(/```json/g, "").replace(/```/g, "").trim();
-    
+    const rawResponse = await callGeminiWithRetry(nlpGenAI, prompt);
+    if (!rawResponse) return null;
+
+    let jsonStr = rawResponse.replace(/```json/g, "").replace(/```/g, "").trim();
     const parsed = JSON.parse(jsonStr);
+    
     console.log('--- AI RAW PARSE RESULT ---');
     console.log('Text:', text);
     console.log('Parsed:', parsed);
@@ -89,27 +128,12 @@ const parseTravelIntent = async (text) => {
   }
 };
 
-const fs = require('fs');
-const path = require('path');
-
-const logFile = path.join(__dirname, '../../logs/debug.txt');
-const logToDebug = (msg) => {
-  try {
-    const timestamp = new Date().toISOString();
-    fs.appendFileSync(logFile, `[${timestamp}] ${msg}\n`);
-  } catch (e) {
-    console.error('Logging failed', e);
-  }
-};
-
 /**
  * Generates realistic travel data (Flight/Train/Bus) using Gemini
- * Includes a timeout, retry logic, caching, and demo data fallback.
  */
 const generateTravelDataAI = async (type, source, destination, date) => {
   const cacheKey = `${type}-${source}-${destination}-${date}`;
   
-  // 1. Check Cache
   if (aiCache.has(cacheKey)) {
     const cached = aiCache.get(cacheKey);
     if (Date.now() - cached.timestamp < CACHE_TTL) {
@@ -119,14 +143,18 @@ const generateTravelDataAI = async (type, source, destination, date) => {
     aiCache.delete(cacheKey);
   }
 
-  logToDebug(`START AI Gen: ${type} | ${source} -> ${destination} on ${date}`);
-  
-  if (!process.env.GEMINI_API_KEY) {
-    logToDebug('MISSING GEMINI_API_KEY');
+  if (source === destination) {
+    logToDebug(`SKIP AI Gen: Source and Destination same (${source} -> ${destination})`);
     return [];
   }
 
-  // Map type to specific operator key name
+  logToDebug(`START AI Gen: ${type} | ${source} -> ${destination} on ${date}`);
+  
+  if (!process.env.GEMINI_NLP_KEY && !process.env.GEMINI_TRAVEL_KEY) {
+    logToDebug('MISSING GEMINI API KEYS');
+    return [];
+  }
+
   const operatorKey = type === 'flight' ? 'airline' : (type === 'train' ? 'trainName' : 'busOperator');
   const transportNumKey = type === 'flight' ? 'flightNumber' : (type === 'train' ? 'trainNumber' : 'busNumber');
 
@@ -162,70 +190,43 @@ const generateTravelDataAI = async (type, source, destination, date) => {
     Return ONLY the JSON.
   `;
 
-  const MAX_RETRIES = 2;
-  const sleep = (ms) => new Promise(res => setTimeout(res, ms));
+  try {
+    const rawResponse = await callGeminiWithRetry(travelGenAI, prompt);
+    if (!rawResponse) return [];
 
-  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Gemini API Timeout')), 25000)
-    );
-
-    try {
-      const resultPromise = model.generateContent(prompt);
-      const result = await Promise.race([resultPromise, timeoutPromise]);
-      const response = await result.response;
-      let jsonStr = response.text();
-      
-      jsonStr = jsonStr.replace(/```json/g, "").replace(/```/g, "").trim();
-      const start = jsonStr.indexOf('[');
-      const end = jsonStr.lastIndexOf(']');
-      if (start !== -1 && end !== -1) {
-        jsonStr = jsonStr.substring(start, end + 1);
-      }
-      
-      const parsed = JSON.parse(jsonStr);
-      const validated = Array.isArray(parsed) ? parsed.map(item => ({
-          ...item,
-          type: type,
-          source: source,
-          destination: destination,
-          sourceName: item.sourceName || source,
-          destinationName: item.destinationName || destination,
-          pricing: Array.isArray(item.pricing) ? item.pricing : [{ class: 'General', price: 2000, totalSeats: 50, availableSeats: 10 }],
-          isActive: true,
-          isRealTime: true,
-          [operatorKey]: item[operatorKey] || 'Unknown Operator',
-          [transportNumKey]: item[transportNumKey] || 'TBD'
-      })) : [];
-
-      // Update Cache
-      if (validated.length > 0) {
-        aiCache.set(cacheKey, { data: validated, timestamp: Date.now() });
-        logToDebug(`SUCCESS AI Gen: ${validated.length} ${type} items.`);
-        return validated;
-      }
-
-      logToDebug(`AI returned 0 results for ${type}.`);
-      return [];
-    } catch (error) {
-      const is429 = error.message.includes('429') || (error.response && error.response.status === 429);
-      const isTransient = error.message.includes('503') || error.message.includes('504') || error.message.includes('Timeout');
-      
-      if (is429) {
-        logToDebug(`QUOTA EXCEEDED (429): Entering cooldown for 60s.`);
-        quotaCooldownUntil = Date.now() + 60000;
-        return [];
-      }
-
-      if (isTransient && attempt < MAX_RETRIES) {
-        logToDebug(`Transient error (${error.message}), retrying... (${attempt + 1}/${MAX_RETRIES})`);
-        await sleep(2000 * (attempt + 1));
-        continue;
-      }
-      
-      logToDebug(`ERROR AI final fail: ${type} -> ${error.message}.`);
-      return [];
+    let jsonStr = rawResponse.replace(/```json/g, "").replace(/```/g, "").trim();
+    const start = jsonStr.indexOf('[');
+    const end = jsonStr.lastIndexOf(']');
+    if (start !== -1 && end !== -1) {
+      jsonStr = jsonStr.substring(start, end + 1);
     }
+    
+    const parsed = JSON.parse(jsonStr);
+    const validated = Array.isArray(parsed) ? parsed.map(item => ({
+        ...item,
+        type: type,
+        source: source,
+        destination: destination,
+        sourceName: item.sourceName || source,
+        destinationName: item.destinationName || destination,
+        pricing: Array.isArray(item.pricing) ? item.pricing : [{ class: 'General', price: 2000, totalSeats: 50, availableSeats: 10 }],
+        isActive: true,
+        isRealTime: true,
+        [operatorKey]: item[operatorKey] || 'Unknown Operator',
+        [transportNumKey]: item[transportNumKey] || 'TBD'
+    })) : [];
+
+    if (validated.length > 0) {
+      aiCache.set(cacheKey, { data: validated, timestamp: Date.now() });
+      logToDebug(`SUCCESS AI Gen: ${validated.length} ${type} items.`);
+      return validated;
+    }
+
+    logToDebug(`AI returned 0 results for ${type}.`);
+    return [];
+  } catch (error) {
+    logToDebug(`ERROR AI parsing fail: ${type} -> ${error.message}.`);
+    return [];
   }
 };
 

@@ -43,10 +43,16 @@ const authLimiter = rateLimit({
   max: 10,
   message: { success: false, message: 'அதிக உள்நுழைவு முயற்சிகள். 15 நிமிடம் கழித்து முயற்சிக்கவும்' },
 });
+const nlpLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100, // Increased for development
+  message: { success: false, message: 'AI பயன்பாடு அதிகம். சிறிது நேரம் கழித்து முயற்சிக்கவும்' },
+});
 
 app.use('/api/', limiter);
 app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);
+app.use('/api/nlp', nlpLimiter);
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
 app.get('/', (req, res) => {

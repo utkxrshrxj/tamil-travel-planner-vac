@@ -23,6 +23,7 @@ const nlpRoutes     = require('./routes/nlpRoutes');
 connectDB();
 
 const app = express();
+app.set('trust proxy', 1);
 
 // ─── Security & Utility Middleware ───────────────────────────────────────────
 app.use(helmet());

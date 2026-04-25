@@ -1,16 +1,48 @@
-# React + Vite
+# 🎨 நம்ம யாத்திரை — Namma Yatra Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend application for **Namma Yatra**, built with **React 19** and **Vite**. It provides a premium, localized interface for travel booking and planning in Tamil.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **📍 Interactive Maps:** View routes and locations using Leaflet.js.
+- **🗣️ Tamil Voice/Text Search:** AI-powered search bar for natural language queries.
+- **🎫 Ticket Dashboard:** Manage and download your travel tickets.
+- **👤 User Profile:** Secure login and profile management.
+- **📊 Real-time Data:** Live flight and train information via integrated APIs.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework:** [React 19](https://react.dev/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS 4.0](https://tailwindcss.com/)
+- **State Management:** [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
+- **Navigation:** [React Router 7](https://reactrouter.com/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Maps:** [Leaflet](https://leafletjs.com/)
 
-## Expanding the ESLint configuration
+## ⚙️ Development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Install Dependencies
+```bash
+npm install
+```
+
+### 2. Environment Setup
+Create a `.env` file in this directory:
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+### 3. Start Development Server
+```bash
+npm run dev
+```
+
+### 4. Build for Production
+```bash
+npm run build
+```
+
+---
+
+**[Back to Root README](../README.md)**

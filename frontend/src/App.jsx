@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Landing } from './pages/Landing';
 import { Login } from './pages/Login';
@@ -9,6 +10,7 @@ import { Account } from './pages/Account';
 import { PNR } from './pages/PNR';
 import { RouteMap } from './pages/RouteMap';
 import { useAuthStore } from './store/authStore';
+import { authAPI } from './services/api';
 
 // Protected Route Wrapper
 function ProtectedRoute({ children }) {
@@ -17,7 +19,21 @@ function ProtectedRoute({ children }) {
 }
 
 export default function App() {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user, setUser, logout } = useAuthStore();
+
+  useEffect(() => {
+    if (isAuthenticated && !user) {
+      authAPI.getMe()
+        .then(res => {
+          if (res.data.success) {
+            setUser(res.data.user || res.data.data);
+          }
+        })
+        .catch(() => {
+          logout();
+        });
+    }
+  }, [isAuthenticated, user, setUser, logout]);
 
   return (
     <BrowserRouter>

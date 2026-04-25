@@ -3,7 +3,7 @@ import { NavBar } from '../components/NavBar';
 import { useAuthStore } from '../store/authStore';
 import { authAPI, bookingAPI, ticketAPI } from '../services/api';
 import { User, Package, Bookmark, Settings, LogOut, Edit2, Save, X, Loader2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const TAMIL_CITY_NAMES = {
   'MAS': 'சென்னை', 'MAA': 'சென்னை',
@@ -24,14 +24,15 @@ const TAMIL_CITY_NAMES = {
 };
 
 export function Account() {
-  const { user, logout } = useAuthStore();
+  const { user, logout, setUser } = useAuthStore();
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('profile');
   const [bookings, setBookings] = useState([]);
   const [savedTickets, setSavedTickets] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const { setUser } = useAuthStore();
+  
   const [editForm, setEditForm] = useState({
     username: user?.username || '',
     email: user?.email || '',
@@ -39,15 +40,24 @@ export function Account() {
     gender: user?.gender || ''
   });
 
-  const location = window.location; // Fallback if useLocation not imported yet, but I'll add the import
+  useEffect(() => {
+    if (user) {
+      setEditForm({
+        username: user.username || '',
+        email: user.email || '',
+        age: user.age || '',
+        gender: user.gender || ''
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
+    const query = new URLSearchParams(location.search);
     const tab = query.get('tab');
     if (tab && ['profile', 'bookings', 'tickets', 'settings'].includes(tab)) {
       setActiveTab(tab);
     }
-  }, [window.location.search]);
+  }, [location.search]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,7 +114,7 @@ export function Account() {
     setIsSaving(true);
     try {
       const res = await authAPI.updateProfile(editForm);
-      const updatedUser = res.data.data || res.data;
+      const updatedUser = res.data.user;
       setUser(updatedUser);
       setIsEditing(false);
       alert('சுயவிவரம் புதுப்பிக்கப்பட்டது! (Profile updated!)');

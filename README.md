@@ -1,4 +1,4 @@
-# 🚀 Namma Yatra - AI-Powered Tamil Travel Planner
+# 🚀 Namma Yatra - Tamil Travel Planner
 
 **Namma Yatra** (நம்ம யாத்திரை) is a modern, full-stack travel booking and planning application tailored for Tamil-speaking users. It leverages cutting-edge AI (Google Gemini) to provide a seamless travel experience, from searching for routes to generating digital tickets.
 

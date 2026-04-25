@@ -5,7 +5,9 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 
-dotenv.config();
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
@@ -96,7 +98,6 @@ const server = app.listen(PORT, () => {
   console.log(`\n🚀 நம்ம யாத்திரை சர்வர் இயங்குகிறது!`);
   console.log(`   Port    : ${PORT}`);
   console.log(`   Env     : ${process.env.NODE_ENV}`);
-  console.log(`   URL     : http://localhost:${PORT}\n`);
 });
 
 // Handle unhandled promise rejections
